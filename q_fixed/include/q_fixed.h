@@ -16,17 +16,17 @@ typedef struct {
     int wf;
 }q_fixed;
 
-#define Q_FIXED_SIZE             0x20 // 4byte
+#define Q_FIXED_SIZE                    0x20 // 4byte
 
-#define max(x, y)                ((x) > (y) ? (x): (y))
+#define max(x, y)                       ((x) > (y) ? (x): (y))
 
-#define min(x, y)                ((x) < (y) ? (x): (y))
+#define min(x, y)                       ((x) < (y) ? (x): (y))
 
-#define diff(x, y)               (max(x, y) - min(x, y))
+#define diff(x, y)                      (max(x, y) - min(x, y))
 
-#define __if_else(cond, s1, s2)  ((cond) ? (s1): (s2))
+#define __if_else(cond, s1, s2)         ((cond) ? (s1): (s2))
 
-#define __to_q_fixed(n, wf)      (int32_t)((n) * (1 << (wf)))
+#define __to_q_fixed(n, wf)             (int32_t)((n) * (1 << (wf)))
 
 //
 // define a q_fixed object
