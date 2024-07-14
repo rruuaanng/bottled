@@ -1,0 +1,7 @@
+test_*.c
+test_*.cc
+.vs
+.vscode
+.idea
+*.exe
+*.out

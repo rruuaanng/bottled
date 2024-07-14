@@ -1,0 +1,28 @@
+{
+    "q_fixed": {
+        "function": [
+            "q_fixed_to_float32",
+            "float32_to_q_fixed",
+            "q_fixed_add",
+            "q_fixed_mul",
+            "q_fixed_div",
+            "q_fixed_gt",
+            "q_fixed_lt",
+            "q_fixed_eq"
+        ],
+        "constant": [
+            "Q_FIXED_SIZE"
+        ],
+        "macro": [
+            "Q_FIXED_VAL",
+            "q_fixed",
+            "max",
+            "min",
+            "diff",
+            "pow"
+        ],
+        "type": [
+            "q_fixed"
+        ]
+    }
+}
