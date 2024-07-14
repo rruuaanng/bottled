@@ -59,13 +59,15 @@ typedef struct {
 #define q7_fixed_float(name, n) \
     q_fixed name = {__to_q_fixed(n, 7), 0x07}
 
-
 //
 // define a q_fixed constant
 //
 #define Q_FIXED_VAL(fixed, wf) \
     {fixed, __if_else(wf <= Q_FIXED_SIZE, wf, Q_FIXED_SIZE)}
-    
+
+#define Q_FIXED_FVAL(n, wf) \
+    __to_q_fixed(n, __if_else(wf <= Q_FIXED_SIZE, wf, Q_FIXED_SIZE));
+
 //
 // float-point number convert to fixed-point number
 //
