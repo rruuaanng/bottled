@@ -6,9 +6,7 @@
 //
 // park transform
 //
-void park_direct_2p_q_fixed(
-    uint32_t *d, uint32_t *q,
-    uint32_t alpha, uint32_t beta)
+void park_direct_2p_q_fixed(q_d *qd, alpha_beta ab)
 {
 
 }
@@ -16,9 +14,7 @@ void park_direct_2p_q_fixed(
 //
 // park inverse transform
 //
-void park_inverse_2p_q_fixed(
-    uint32_t *alpha, uint32_t *beta,
-    uint32_t d, uint32_t q)
+void park_inverse_2p_q_fixed(alpha_beta *ab, q_d qd)
 {
     
 }
