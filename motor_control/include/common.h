@@ -28,7 +28,7 @@ typedef struct {
 typedef struct {
     int32_t q;
     int32_t d;
-}qd;
+}q_d;
 
 #define qd(name, q, d) \
     qd name = {q, d}
