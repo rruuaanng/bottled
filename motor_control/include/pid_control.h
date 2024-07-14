@@ -6,19 +6,19 @@
 //
 // PID control
 //
-void pid_control(
-    uint32_t *err_sum, uint32_t *prev_err, 
-    float *out,
-    float kp, float ki, float kd,
-    uint32_t measured_val, uint32_t target)
+void pid_control_q_fixed(
+    int32_t *err_sum, int32_t *prev_err, 
+    int32_t *out,
+    int32_t kp, int32_t ki, int32_t kd,
+    int32_t measured_val, int32_t target)
 {
-    uint32_t err;
+    int32_t err;
     err = target - measured_val;
 
-    uint32_t diff;
+    int32_t diff;
     diff = err - (*prev_err);
     
-    float p, i, d;
+    int32_t p, i, d;
     p = kp * err;
     i = ki * (*err_sum);
     d = kd * diff;
