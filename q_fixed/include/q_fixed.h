@@ -26,7 +26,7 @@ typedef struct {
 
 #define __if_else(cond, s1, s2)  ((cond) ? (s1): (s2))
 
-#define __to_q_fixed(n, wf)      ((n) * (1 << (wf)))
+#define __to_q_fixed(n, wf)      (int32_t)((n) * (1 << (wf)))
 
 //
 // define a q_fixed object
@@ -48,16 +48,16 @@ typedef struct {
     q_fixed name = {fixed, 0x07}
 
 #define q_fixed_float(name, n, wf) \
-    q_fixed name = {(int32_t)(__to_q_fixed(n, wf)), wf}
+    q_fixed name = {__to_q_fixed(n, wf), wf}
 
 #define q31_fixed_float(name, n) \
-    q_fixed name = {(int32_t)(__to_q_fixed(n, 31)), Q_FIXED_SIZE - 1}
+    q_fixed name = {__to_q_fixed(n, 31), Q_FIXED_SIZE - 1}
 
 #define q15_fixed_float(name, n) \
-    q_fixed name = {(int32_t)(__to_q_fixed(n, 15)), 0x0F}
+    q_fixed name = {__to_q_fixed(n, 15), 0x0F}
 
 #define q7_fixed_float(name, n) \
-    q_fixed name = {(int32_t)(__to_q_fixed(n, 7)), 0x07}
+    q_fixed name = {__to_q_fixed(n, 7), 0x07}
 
 
 //
@@ -81,7 +81,7 @@ void float_to_q_fixed(
     if (wf > Q_FIXED_SIZE)
         wf = Q_FIXED_SIZE;
 
-    fixed->N = (int32_t)(__to_q_fixed(n, wf));
+    fixed->N = __to_q_fixed(n, wf);
     fixed->wf = wf;
 }
 
