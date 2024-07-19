@@ -8,7 +8,8 @@
             "q_fixed_div",
             "q_fixed_gt",
             "q_fixed_lt",
-            "q_fixed_eq"
+            "q_fixed_eq",
+            "q_fixed_math_sign"
         ],
         "constant": [
             "Q_FIXED_SIZE"
