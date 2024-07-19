@@ -9,9 +9,9 @@
 
 
 typedef struct {
-    int32_t A;
-    int32_t B;
-    int32_t C;
+    int32_t ia;
+    int32_t ib;
+    int32_t ic;
 }phase_v;
 
 #define phase_v(name, a, b, c) \
