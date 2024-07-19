@@ -9,18 +9,20 @@
             "q_fixed_gt",
             "q_fixed_lt",
             "q_fixed_eq",
-            "q_fixed_math_sign"
+            "q_fixed_math_sign",
+            "q_fixed_math_abs"
         ],
         "constant": [
             "Q_FIXED_SIZE"
         ],
         "macro": [
             "Q_FIXED_VAL",
+            "Q_FIXED_FVAL",
             "q_fixed",
             "max",
             "min",
             "diff",
-            "pow"
+            "q_fixed_is_neg"
         ],
         "type": [
             "q_fixed"

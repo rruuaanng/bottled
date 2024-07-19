@@ -15,6 +15,10 @@
 
 #define __to_q_fixed(n, wf)             (int32_t)((n) * (1 << (wf)))
 
+#define __get_symbol_bit()              (1 << ((sizeof(int32_t) * 8) - 1))
+
+#define q_fixed_is_neg(n)               ((n) & __get_symbol_bit()? 1: 0)
+
 //
 // q_fixed structure
 //
@@ -293,15 +297,21 @@ bool q_fixed_eq(q_fixed x1, q_fixed x2, bool is_ne)
 //
 int q_fixed_math_sign(q_fixed x1)
 {
-    int mask;
-
-    mask = 1 << ((sizeof(int32_t) * 8) - 1);
-    if (x1.N & mask) {
+    if (q_fixed_is_neg(x1.N)) {
         return -1;
     } else if (x1.N != 0){
         return 1;
     } else {
         return 0;
+    }
+}
+
+int32_t q_fixed_math_abs(q_fixed x1)
+{
+    if (q_fixed_is_neg(x1.N)) {
+        return x1.N * -1;
+    } else {
+        return x1.N;
     }
 }
 
