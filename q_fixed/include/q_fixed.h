@@ -153,8 +153,8 @@ void q_fixed_add(
               n2 <<= wf_diff);
 
     __if_else(is_sub,
-        y->N = n1 - n2,
-        y->N = n1 + n2);
+              y->N = n1 - n2,
+              y->N = n1 + n2);
 
     // update the wf of the result
     y->wf = max(x1.wf, x2.wf);
@@ -172,7 +172,14 @@ void q_fixed_mul(
     q_fixed *y,
     q_fixed x1, q_fixed x2)
 {
+    int lim;
 
+    lim = x1.wf + x2.wf;
+
+    y->N = x1.N * x2.N;
+    __if_else(lim < 64,
+              y->wf = lim,
+              y->wf = 64);
 }
 
 //
