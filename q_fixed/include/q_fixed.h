@@ -3,19 +3,6 @@
 
 #include "common.h"
 
-//
-// q_fixed structure
-//
-// argument:
-// N    fixed-point carrier
-// wf   bit width
-// 
-// 
-typedef struct {
-    int32_t N;
-    int wf;
-}q_fixed;
-
 #define Q_FIXED_SIZE                    0x20 // 4byte
 
 #define max(x, y)                       ((x) > (y) ? (x): (y))
@@ -27,6 +14,14 @@ typedef struct {
 #define __if_else(cond, s1, s2)         ((cond) ? (s1): (s2))
 
 #define __to_q_fixed(n, wf)             (int32_t)((n) * (1 << (wf)))
+
+//
+// q_fixed structure
+//
+typedef struct {
+    int32_t N;
+    int wf;
+}q_fixed;
 
 //
 // define a q_fixed object
