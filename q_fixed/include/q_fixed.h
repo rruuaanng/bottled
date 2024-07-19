@@ -306,6 +306,9 @@ int q_fixed_math_sign(q_fixed x1)
     }
 }
 
+//
+// absolute value function
+//
 int32_t q_fixed_math_abs(q_fixed x1)
 {
     if (q_fixed_is_neg(x1.N)) {
