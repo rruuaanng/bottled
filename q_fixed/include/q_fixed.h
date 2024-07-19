@@ -100,7 +100,6 @@ int q_fixed_to_float(float *n, q_fixed fixed)
     if (fixed.wf > Q_FIXED_SIZE)
         fixed.wf = Q_FIXED_SIZE;
 
-    // save the sign of the iqN input to the exponent construction
     if (fixed.N < 0) {
         offset |= 0x8000;
         in_fixed = -fixed.N;
@@ -115,14 +114,10 @@ int q_fixed_to_float(float *n, q_fixed fixed)
         offset -= 0x0080;
     }
 
-    // round the uiq31 result and and shift to uiq23
     tmp = (in_fixed + 0x0080) >> 8;
-
-    // remove the implied MSB bit of the mantissa
     tmp &= ~0x00800000;
     tmp += (uint32_t)offset << 16;
 
-    // return the mantissa + exp + sign result as a floating point type
     *n = *(float *)&tmp;
     return 0;
 }
