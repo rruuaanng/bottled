@@ -1,7 +1,11 @@
 #ifndef NFWATER_Q_FIXED_H
 #define NFWATER_Q_FIXED_H
 
-#include "common.h"
+//
+// import standard library
+//
+#include <stdint.h>
+#include <stdbool.h>
 
 #define Q_FIXED_SIZE                    0x20 // 4byte
 
@@ -177,9 +181,9 @@ void q_fixed_mul(
     lim = x1.wf + x2.wf;
 
     y->N = x1.N * x2.N;
-    __if_else(lim < 64,
+    __if_else(lim < (Q_FIXED_SIZE * 2),
               y->wf = lim,
-              y->wf = 64);
+              y->wf = (Q_FIXED_SIZE * 2));
 }
 
 //
