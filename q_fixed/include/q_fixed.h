@@ -298,4 +298,21 @@ bool q_fixed_eq(q_fixed x1, q_fixed x2, bool is_ne)
     return a;
 }
 
+//
+// symbolic function
+//
+int q_fixed_math_sign(q_fixed x1)
+{
+    int mask;
+
+    mask = 1 << ((sizeof(int32_t) * 8) - 1);
+    if (x1.N & mask) {
+        return -1;
+    } else if (x1.N != 0){
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 #endif // NFWATER_Q_FIXED_H
