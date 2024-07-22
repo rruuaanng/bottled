@@ -1,7 +1,7 @@
 #ifndef NONGFU_SPRING_MOTOR_CONTROL_CLARKE_H
 #define NONGFU_SPRING_MOTOR_CONTROL_CLARKE_H
 
-#include <common.h>
+#include <motor_control/common.h>
 
 // 
 // clarke transform

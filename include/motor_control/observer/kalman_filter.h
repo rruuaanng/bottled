@@ -1,7 +1,7 @@
 #ifndef NONGFU_SPRING_MOTOR_CONTROL_OBSERVER_KALMAN_FILTER_H
 #define NONGFU_SPRING_MOTOR_CONTROL_OBSERVER_KALMAN_FILTER_H
 
-#include <common.h>
+#include <motor_control/common.h>
 
 //
 // kalman filter

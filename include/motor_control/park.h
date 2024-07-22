@@ -1,7 +1,7 @@
 #ifndef NONGFU_SPRING_MOTOR_CONTROL_PARK_H
 #define NONGFU_SPRING_MOTOR_CONTROL_PARK_H
 
-#include <common.h>
+#include <motor_control/common.h>
 
 //
 // park transform
