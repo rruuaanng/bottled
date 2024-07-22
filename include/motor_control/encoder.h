@@ -1,6 +1,6 @@
 #ifndef NONGFU_SPRING_MOTOR_CONTROL_ENCODER_H
 #define NONGFU_SPRING_MOTOR_CONTROL_ENCODER_H
 
-#include <motor_control/common.h>
+
 
 #endif // NONGFU_SPRING_MOTOR_CONTROL_ENCODER_H
