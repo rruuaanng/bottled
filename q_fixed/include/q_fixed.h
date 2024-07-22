@@ -309,6 +309,7 @@ bool q_fixed_eq(q_fixed x1, q_fixed x2, bool is_ne)
 //
 // symbolic function
 //
+static inline
 int q_fixed_math_sign(q_fixed x1)
 {
     if (q_fixed_is_neg(x1.N)) {
@@ -323,6 +324,7 @@ int q_fixed_math_sign(q_fixed x1)
 //
 // absolute value function
 //
+static inline
 int32_t q_fixed_math_abs(q_fixed x1)
 {
     if (q_fixed_is_neg(x1.N)) {
