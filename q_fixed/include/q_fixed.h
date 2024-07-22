@@ -7,7 +7,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define Q_FIXED_SIZE                    0x20 // 4byte
 
 #define max(x, y)                       ((x) > (y) ? (x): (y))
 
@@ -28,7 +27,11 @@
 //
 typedef struct {
     int32_t N;
+#define Q_FIXED_SIZE                    0x20 // 4byte
     int wf;
+#define Q_FIXED_WF_31                   Q_FIXED_SIZE - 1    // Q31
+#define Q_FIXED_WF_15                   0x0F                // Q15
+#define Q_FIXED_WF_7                    0x07                // Q7
 }q_fixed;
 
 //
@@ -42,25 +45,25 @@ typedef struct {
     q_fixed name = {fixed, __if_else(wf <= Q_FIXED_SIZE, wf, Q_FIXED_SIZE)}
 
 #define q31_fixed(name, fixed) \
-    q_fixed name = {fixed, Q_FIXED_SIZE - 1}
+    q_fixed name = {fixed, Q_FIXED_WF_31}
 
 #define q15_fixed(name, fixed) \
-    q_fixed name = {fixed, 0x0F}
+    q_fixed name = {fixed, Q_FIXED_WF_15}
 
 #define q7_fixed(name, fixed) \
-    q_fixed name = {fixed, 0x07}
+    q_fixed name = {fixed, Q_FIXED_WF_7}
 
 #define q_fixed_float(name, n, wf) \
     q_fixed name = {__to_q_fixed(n, wf), wf}
 
 #define q31_fixed_float(name, n) \
-    q_fixed name = {__to_q_fixed(n, 31), Q_FIXED_SIZE - 1}
+    q_fixed name = {__to_q_fixed(n, Q_FIXED_WF_31), Q_FIXED_WF_31}
 
 #define q15_fixed_float(name, n) \
-    q_fixed name = {__to_q_fixed(n, 15), 0x0F}
+    q_fixed name = {__to_q_fixed(n, Q_FIXED_WF_15), Q_FIXED_WF_15}
 
 #define q7_fixed_float(name, n) \
-    q_fixed name = {__to_q_fixed(n, 7), 0x07}
+    q_fixed name = {__to_q_fixed(n, Q_FIXED_WF_7), Q_FIXED_WF_7}
 
 //
 // define a q_fixed constant
