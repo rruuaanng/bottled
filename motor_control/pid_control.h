@@ -1,6 +1,10 @@
 #ifndef NONGFU_SPRING_MOTOR_CONTROL_PID_CONTROL_H
 #define NONGFU_SPRING_MOTOR_CONTROL_PID_CONTROL_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <motor_control/common.h>
 
 //
@@ -28,5 +32,9 @@ void pid_control_q_fixed(
     *err_sum += err;
     *out = (p + i + d);
 }
+
+#ifdef __cplusplus
+}
+#endif 
 
 #endif // NONGFU_SPRING_MOTOR_CONTROL_PID_CONTROL_H

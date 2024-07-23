@@ -1,6 +1,10 @@
 #ifndef NONGFU_SPRING_MOTOR_CONTROL_OBSERVER_KALMAN_FILTER_H
 #define NONGFU_SPRING_MOTOR_CONTROL_OBSERVER_KALMAN_FILTER_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <motor_control/common.h>
 
 //
@@ -26,5 +30,9 @@ void kalman_filter_q_fixed(
     *x_last = x_now;
     *out = x_now;
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // NONGFU_SPRING_MOTOR_CONTROL_OBSERVER_KALMAN_FILTER_H

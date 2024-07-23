@@ -1,6 +1,10 @@
 #ifndef NONGFU_SPRING_MOTOR_CONTROL_CLARKE_H
 #define NONGFU_SPRING_MOTOR_CONTROL_CLARKE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <motor_control/common.h>
 
 // 
@@ -41,5 +45,9 @@ void clarke_inverse_2p_q_fixed(phase_v *v, alpha_beta ab)
     v->ib = (0 - ab.alpha + sqrt3 * ab.beta) / 2;
     v->ic = (0 - ab.alpha - sqrt3 * ab.beta) / 2;
 }
+
+#ifdef __cplusplus
+}
+#endif 
 
 #endif // NONGFU_SPRING_MOTOR_CONTROL_CLARKE_H

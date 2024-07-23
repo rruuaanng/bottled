@@ -1,6 +1,10 @@
 #ifndef NONGFU_SPRING_MOTOR_CONTROL_COMMON_H
 #define NONGFU_SPRING_MOTOR_CONTROL_COMMON_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //
 // import standard library
 //
@@ -33,5 +37,8 @@ typedef struct {
 #define qd(name, q, d) \
     qd name = {q, d}
 
+#ifdef __cplusplus
+}
+#endif 
 
 #endif // NONGFU_SPRING_MOTOR_CONTROL_COMMON_H

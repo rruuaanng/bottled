@@ -1,6 +1,10 @@
 #ifndef NONGFU_SPRING_MOTOR_CONTROL_PARK_H
 #define NONGFU_SPRING_MOTOR_CONTROL_PARK_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <motor_control/common.h>
 
 //
@@ -24,5 +28,9 @@ void park_inverse_2p_q_fixed(
 {
     
 }
+
+#ifdef __cplusplus
+}
+#endif 
 
 #endif // NONGFU_SPRING_MOTOR_CONTROL_PARK_H
