@@ -1,5 +1,5 @@
-#ifndef NFWATER_Q_FIXED_H
-#define NFWATER_Q_FIXED_H
+#ifndef NONGFU_SPRING_Q_FIXED_H
+#define NONGFU_SPRING_Q_FIXED_H
 
 //
 // import standard library
@@ -334,4 +334,4 @@ int32_t q_fixed_math_abs(q_fixed x1)
     }
 }
 
-#endif // NFWATER_Q_FIXED_H
+#endif // NONGFU_SPRING_Q_FIXED_H
