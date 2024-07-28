@@ -10,7 +10,7 @@ my-project
         -- src
         -- ...
     -- lib
-        -- nongfu_spring
+        -- bottled
         -- ...
 ```
 
@@ -18,7 +18,7 @@ my-project
 
 ```C
 #include <iostream>
-#include <utils/q_fixed.h>
+#include <common/q_fixed.h>
 
 
 int main(int argc, char const *argv[])
