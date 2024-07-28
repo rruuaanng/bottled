@@ -1,5 +1,9 @@
-#ifndef NONGFU_SPRING_Q_FIXED_H
-#define NONGFU_SPRING_Q_FIXED_H
+#ifndef NONGFU_SPRING_COMMON_Q_FIXED_H
+#define NONGFU_SPRING_COMMON_Q_FIXED_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 //
 // import standard library
@@ -334,4 +338,8 @@ int32_t q_fixed_math_abs(q_fixed x1)
     }
 }
 
-#endif // NONGFU_SPRING_Q_FIXED_H
+#ifdef __cplusplus
+}
+#endif 
+
+#endif // NONGFU_SPRING_COMMON_Q_FIXED_H
