@@ -72,20 +72,18 @@ typedef struct {
 //
 // define a q_fixed constant
 //
-#define q31(n)                           __to_q_fixed(n, , Q_FIXED_WF_31)
-#define q15(n)                           __to_q_fixed(n, , Q_FIXED_WF_15)
-#define q7(n)                            __to_q_fixed(n, Q_FIXED_WF_7)
+                           
+#define q15(n)                           
+#define q7(n)                            
 
-#define q_fixed(fixed, wf) \
-    {fixed, wf}
-#define q_fixed_float(n, wf) \
-    {__to_q_fixed(n, wf), wf}
-#define q31_fixed(fixed) \
-    {fixed, Q_FIXED_WF_31}
-#define q15_fixed(fixed) \
-    {fixed, Q_FIXED_WF_15}
-#define q7_fixed(fixed) \
-    {fixed, Q_FIXED_WF_7}
+#define q_fixed(fixed, wf)                  {fixed, wf}
+#define q_fixed_float(n, wf)                {__to_q_fixed(n, wf), wf}
+#define q31_fixed(fixed)                    {fixed, Q_FIXED_WF_31}
+#define q15_fixed(fixed)                    {fixed, Q_FIXED_WF_15}
+#define q7_fixed(fixed)                     {fixed, Q_FIXED_WF_7}
+#define q31(n)                              q_fixed_float(n, Q_FIXED_WF_31)
+#define q15(n)                              q_fixed_float(n, Q_FIXED_WF_15)
+#define q7(n)                               q_fixed_float(n, Q_FIXED_WF_7)
 
 //
 // float-point number convert to fixed-point number
