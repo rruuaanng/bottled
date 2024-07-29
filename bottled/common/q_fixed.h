@@ -39,44 +39,53 @@ typedef struct {
 }q_fixed;
 
 //
-// define a q_fixed object
+// define a q_fixed variable
 //
 // argument:
 // name     variable name
 // fixed    fixed-point value
 // wf       bit width
-#define q_fixed(name, fixed, wf) \
+#define q_fixed_var(name, fixed, wf) \
     q_fixed name = {fixed, __if_else(wf <= Q_FIXED_SIZE, wf, Q_FIXED_SIZE)}
 
-#define q31_fixed(name, fixed) \
-    q_fixed name = {fixed, Q_FIXED_WF_31}
-
-#define q15_fixed(name, fixed) \
-    q_fixed name = {fixed, Q_FIXED_WF_15}
-
-#define q7_fixed(name, fixed) \
-    q_fixed name = {fixed, Q_FIXED_WF_7}
-
-#define q_fixed_float(name, n, wf) \
+#define q_fixed_float_var(name, n, wf) \
     q_fixed name = {__to_q_fixed(n, wf), wf}
 
-#define q31_fixed_float(name, n) \
+#define q31_fixed_var(name, fixed) \
+    q_fixed name = {fixed, Q_FIXED_WF_31}
+
+#define q15_fixed_var(name, fixed) \
+    q_fixed name = {fixed, Q_FIXED_WF_15}
+
+#define q7_fixed_var(name, fixed) \
+    q_fixed name = {fixed, Q_FIXED_WF_7}
+
+#define q31_fixed_float_var(name, n) \
     q_fixed name = {__to_q_fixed(n, Q_FIXED_WF_31), Q_FIXED_WF_31}
 
-#define q15_fixed_float(name, n) \
+#define q15_fixed_float_var(name, n) \
     q_fixed name = {__to_q_fixed(n, Q_FIXED_WF_15), Q_FIXED_WF_15}
 
-#define q7_fixed_float(name, n) \
+#define q7_fixed_float_var(name, n) \
     q_fixed name = {__to_q_fixed(n, Q_FIXED_WF_7), Q_FIXED_WF_7}
 
 //
 // define a q_fixed constant
 //
-#define Q_FIXED_VAL(fixed, wf) \
-    {fixed, __if_else(wf <= Q_FIXED_SIZE, wf, Q_FIXED_SIZE)}
+#define q31(n)                           __to_q_fixed(n, 31)
+#define q15(n)                           __to_q_fixed(n, 15)
+#define q7(n)                            __to_q_fixed(n, 7)
 
-#define Q_FIXED_FVAL(n, wf) \
-    __to_q_fixed(n, __if_else(wf <= Q_FIXED_SIZE, wf, Q_FIXED_SIZE));
+#define q_fixed(fixed, wf) \
+    {fixed, wf}
+#define q_fixed_float(n, wf) \
+    {__to_q_fixed(n, wf), wf}
+#define q31_fixed(fixed) \
+    {fixed, Q_FIXED_WF_31}
+#define q15_fixed(fixed) \
+    {fixed, Q_FIXED_WF_15}
+#define q7_fixed(fixed) \
+    {fixed, Q_FIXED_WF_7}
 
 //
 // float-point number convert to fixed-point number
