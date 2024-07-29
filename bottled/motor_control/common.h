@@ -12,34 +12,42 @@ extern "C" {
 #include <stdbool.h>
 
 
+//
+// physical structure
+//
 typedef struct {
     int32_t ia;
     int32_t ib;
     int32_t ic;
 }phase_i;
 
-#define phase_i_var(name, a, b, c) \
-    phase_i name = {a, b, c}
-#define phase_i(a, b, c) \
-    {a, b, c}
-
 typedef struct {
     int32_t alpha;
     int32_t beta;
 }alpha_beta;
-
-#define alpha_beta_var(name, alpha, beta) \
-    alpha_beta name = {alpha, beta}
-#define alpha_beta(alpha, beta) \
-    {alpha, beta}
 
 typedef struct {
     int32_t q;
     int32_t d;
 }q_d;
 
+//
+// define a physical variable
+//
+#define phase_i_var(name, a, b, c) \
+    phase_i name = {a, b, c}
+#define alpha_beta_var(name, alpha, beta) \
+    alpha_beta name = {alpha, beta}
 #define qd_var(name, q, d) \
     qd name = {q, d}
+
+//
+// define a physical constant
+//
+#define phase_i(a, b, c) \
+    {a, b, c}
+#define alpha_beta(alpha, beta) \
+    {alpha, beta}
 #define qd(q, d) \
     {q, d}
 
