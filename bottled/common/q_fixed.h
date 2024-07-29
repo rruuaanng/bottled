@@ -72,10 +72,6 @@ typedef struct {
 //
 // define a q_fixed constant
 //
-                           
-#define q15(n)                           
-#define q7(n)                            
-
 #define q_fixed(fixed, wf)                  {fixed, wf}
 #define q_fixed_float(n, wf)                {__to_q_fixed(n, wf), wf}
 #define q31_fixed(fixed)                    {fixed, Q_FIXED_WF_31}
