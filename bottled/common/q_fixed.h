@@ -77,9 +77,6 @@ typedef struct {
 #define q31_fixed(fixed)                    {fixed, Q_FIXED_WF_31}
 #define q15_fixed(fixed)                    {fixed, Q_FIXED_WF_15}
 #define q7_fixed(fixed)                     {fixed, Q_FIXED_WF_7}
-#define q31(n)                              q_fixed_float(n, Q_FIXED_WF_31)
-#define q15(n)                              q_fixed_float(n, Q_FIXED_WF_15)
-#define q7(n)                               q_fixed_float(n, Q_FIXED_WF_7)
 
 //
 // float-point number convert to fixed-point number
