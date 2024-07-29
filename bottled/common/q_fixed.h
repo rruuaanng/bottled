@@ -46,7 +46,7 @@ typedef struct {
 // fixed    fixed-point value
 // wf       bit width
 #define q_fixed_var(name, fixed, wf) \
-    q_fixed name = {fixed, __if_else(wf <= Q_FIXED_SIZE, wf, Q_FIXED_SIZE)}
+    q_fixed name = {fixed, ((wf) <= Q_FIXED_SIZE)? wf: Q_FIXED_SIZE}
 
 #define q_fixed_float_var(name, n, wf) \
     q_fixed name = {__to_q_fixed(n, wf), wf}
@@ -148,8 +148,7 @@ int q_fixed_to_float(float *n, q_fixed fixed)
 static inline
 void q_fixed_add(
     q_fixed *y, 
-    q_fixed x1, q_fixed x2,
-    bool is_sub)
+    q_fixed x1, q_fixed x2)
 {
     int32_t n1, n2;
     int wf_diff;
@@ -159,14 +158,34 @@ void q_fixed_add(
     
     // align decimal places
     wf_diff = diff(x1.wf, x2.wf);
-    __if_else(x1.wf < x2.wf, 
-              n1 <<= wf_diff,
-              n2 <<= wf_diff);
+    x1.wf < x2.wf ? n2 <<= wf_diff : n1 <<= wf_diff;
+    y->N = n1 + n2;
+    // update the wf of the result
+    y->wf = max(x1.wf, x2.wf);
+}
 
-    __if_else(is_sub,
-              y->N = n1 - n2,
-              y->N = n1 + n2);
+//
+// fixed-point number subtraction
+//
+// argument:
+// y        q_fixed object ptr
+// x1       operand number1
+// x2       operand number2
+static inline
+void q_fixed_sub(
+    q_fixed *y, 
+    q_fixed x1, q_fixed x2)
+{
+    int32_t n1, n2;
+    int wf_diff;
 
+    n1 = x1.N;
+    n2 = x2.N;
+    
+    // align decimal places
+    wf_diff = diff(x1.wf, x2.wf);
+    x1.wf < x2.wf ? n2 <<= wf_diff : n1 <<= wf_diff;
+    y->N = n1 - n2;
     // update the wf of the result
     y->wf = max(x1.wf, x2.wf);
 }
@@ -186,11 +205,14 @@ void q_fixed_mul(
     int lim;
 
     lim = x1.wf + x2.wf;
-
     y->N = x1.N * x2.N;
-    __if_else(lim < (Q_FIXED_SIZE * 2),
-              y->wf = lim,
-              y->wf = (Q_FIXED_SIZE * 2));
+
+    if (lim < (Q_FIXED_SIZE * 2)) {
+        y->wf = lim;
+    }
+    else {
+        y->wf = (Q_FIXED_SIZE * 2);
+    }   
 }
 
 //
@@ -246,22 +268,36 @@ void q_fixed_div_const(
 // argument:
 // x1           operand number1
 // x2           operand number2
-// is_with_eq   whether to include equal to
 static inline
-bool q_fixed_gt(q_fixed x1, q_fixed x2, bool is_with_eq)
+bool q_fixed_gt(q_fixed x1, q_fixed x2)
 {
     q_fixed y;
-    bool a;
 
     // i'm too smart
-    q_fixed_add(&y, x1, x2, true);
-    __if_else(is_with_eq,{
-        a = __if_else(y.N >= 0, true, false);
-    },{
-        a = __if_else(y.N > 0, true, false);
-    });
+    q_fixed_sub(&y, x1, x2);
+    
+    if (y.N > 0)
+        return true;
+    return false;
+}
 
-    return a;
+//
+// fixed-point number greater than comparison with equal
+//
+// argument:
+// x1           operand number1
+// x2           operand number2
+static inline
+bool q_fixed_gte(q_fixed x1, q_fixed x2)
+{
+    q_fixed y;
+
+    // i'm too smart
+    q_fixed_sub(&y, x1, x2);
+
+    if (y.N >= 0)
+        return true;
+    return false;
 }
 
 //
@@ -270,21 +306,34 @@ bool q_fixed_gt(q_fixed x1, q_fixed x2, bool is_with_eq)
 // argument:
 // x1           operand number1
 // x2           operand number2
-// is_with_eq   whether to include equal to
 static inline
-bool q_fixed_lt(q_fixed x1, q_fixed x2, bool is_with_eq)
+bool q_fixed_lt(q_fixed x1, q_fixed x2)
 {
     q_fixed y;
-    bool a;
 
-    q_fixed_add(&y, x1, x2, true);
-    __if_else(is_with_eq,{
-        a = __if_else(y.N <= 0, true, false);
-    },{
-        a = __if_else(y.N < 0, true, false);
-    });
+    q_fixed_sub(&y, x1, x2);
 
-    return a;
+    if (y.N < 0)
+        return true;
+    return false;
+}
+
+//
+// fixed-point number less than comparison with equal
+//
+// argument:
+// x1           operand number1
+// x2           operand number2
+static inline
+bool q_fixed_lte(q_fixed x1, q_fixed x2)
+{
+    q_fixed y;
+
+    q_fixed_sub(&y, x1, x2);
+
+    if (y.N <= 0)
+        return true;
+    return false;
 }
 
 //
@@ -293,21 +342,36 @@ bool q_fixed_lt(q_fixed x1, q_fixed x2, bool is_with_eq)
 // argument:
 // x1           operand number1
 // x2           operand number2
-// is_ne        isn't equal to
 static inline
-bool q_fixed_eq(q_fixed x1, q_fixed x2, bool is_ne)
+bool q_fixed_eq(q_fixed x1, q_fixed x2)
 {
     q_fixed y;
     bool a;
 
-    q_fixed_add(&y, x1, x2, true);
-    __if_else(is_ne,{
-        a = __if_else(y.N != 0, true, false);
-    },{
-        a = __if_else(y.N == 0, true, false);
-    });
-    
-    return a;
+    q_fixed_sub(&y, x1, x2);
+
+    if (y.N == 0)
+        return true;
+    return false;
+}
+
+//
+// fixed-point number not equal comparison
+//
+// argument:
+// x1           operand number1
+// x2           operand number2
+static inline
+bool q_fixed_ne(q_fixed x1, q_fixed x2)
+{
+    q_fixed y;
+    bool a;
+
+    q_fixed_sub(&y, x1, x2);
+
+    if (y.N != 0)
+        return true;
+    return false;
 }
 
 //
