@@ -16,10 +16,10 @@ typedef struct {
     int32_t ia;
     int32_t ib;
     int32_t ic;
-}phase_v;
+}phase_i;
 
-#define phase_v(name, a, b, c) \
-    phase_v name = {a, b, c}
+#define phase_i(name, a, b, c) \
+    phase_i name = {a, b, c}
 
 typedef struct {
     int32_t alpha;
