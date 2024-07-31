@@ -15,7 +15,6 @@ extern "C" {
 // table of sin and cos function value
 //
 #define SIN_COS_TABLE_SIZE              0xFF
-// the angle difference of each point is 1.41
 #define SIN_COS_TABLE {                         \
     0, 807,1614,2419,3224,4026,4826,5623,       \
     6417,7207,7992,8773,9548,10317,11080,       \
