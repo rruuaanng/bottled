@@ -72,11 +72,11 @@ typedef struct {
 //
 // define a q_fixed constant
 //
-#define q_fixed(fixed, wf)                  {fixed, wf}
+#define q_fixed(fixed, wf)                  ((q_fixed){fixed, wf})
 #define q_fixed_float(n, wf)                {__to_q_fixed(n, wf), wf}
-#define q31_fixed(fixed)                    {fixed, Q_FIXED_WF_31}
-#define q15_fixed(fixed)                    {fixed, Q_FIXED_WF_15}
-#define q7_fixed(fixed)                     {fixed, Q_FIXED_WF_7}
+#define q31_fixed(fixed)                    ((q_fixed){fixed, Q_FIXED_WF_31})
+#define q15_fixed(fixed)                    ((q_fixed){fixed, Q_FIXED_WF_15})
+#define q7_fixed(fixed)                     ((q_fixed){fixed, Q_FIXED_WF_7})
 
 //
 // float-point number convert to fixed-point number
@@ -158,7 +158,12 @@ void q_fixed_add(
     
     // align decimal places
     wf_diff = diff(x1.wf, x2.wf);
-    x1.wf < x2.wf ? n2 <<= wf_diff : n1 <<= wf_diff;
+    if (x1.wf < x2.wf) {
+        n2 <<= wf_diff;
+    } else {
+        n1 <<= wf_diff;
+    }
+
     y->N = n1 + n2;
     // update the wf of the result
     y->wf = max(x1.wf, x2.wf);
@@ -184,7 +189,12 @@ void q_fixed_sub(
     
     // align decimal places
     wf_diff = diff(x1.wf, x2.wf);
-    x1.wf < x2.wf ? n2 <<= wf_diff : n1 <<= wf_diff;
+    if (x1.wf < x2.wf) {
+        n2 <<= wf_diff;
+    } else {
+        n1 <<= wf_diff;
+    }
+
     y->N = n1 - n2;
     // update the wf of the result
     y->wf = max(x1.wf, x2.wf);
