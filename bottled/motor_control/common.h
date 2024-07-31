@@ -58,7 +58,7 @@ extern "C" {
     -10317,-9548,-8772,-7992,-7207,-6417,-5623, \
     -4826,-4026,-3224,-2419,-1613,-807,0}
 
-static int32_t sin_table[SIN_COS_TABLE_SIZE + 1] = SIN_COS_TABLE; // 256
+static int32_t sin_table[SIN_COS_TABLE_SIZE + 1] = SIN_COS_TABLE; // q15
 
 //
 // physical structure
