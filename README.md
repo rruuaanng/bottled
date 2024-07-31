@@ -1,19 +1,8 @@
 # bottled
 
-## overview
-
-this repository primarily provides the following components:
-
-- **control algorithm: **field-oriented control (FOC) for high-performance control of BLDC and PMSM.
-- **fixed-point arithmetic: **optimized fixed-point arithmetic functions for efficient numerical computations.
-- **coordinate transformation: **provides motor shaft coordinate transformations and space vector modulation algorithms.
-- **observer: **implements commonly used observer algorithms in motor control, such as  the kalman filter, sliding mode observer (SMO), and flux linkage  observers.
-- **controller: **high-performance current controllers, such as deadbeat controllers and PI controllers.
-- **utility: **provides utility functions for operating with hardware peripheral registers.
-
 ## quick start
 
-integrate directly into the project, for example:
+integrate directly into the project directory, for example:
 ```
 my-project
     -- user_code
