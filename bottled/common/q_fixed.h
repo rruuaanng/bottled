@@ -495,8 +495,7 @@ void q_fixed_math_sin_cos(
     angle %= 360;
     quadrant = angle / 90;
 
-    i = angle * SIN_COS_TABLE_SIZE / 90;
-    i %= SIN_COS_TABLE_SIZE;
+    i = (angle * SIN_COS_TABLE_SIZE / 90) % SIN_COS_TABLE_SIZE;
     
     switch (quadrant) {
     case QUAD_0_90:    // [0, 90°)
