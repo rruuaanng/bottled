@@ -41,16 +41,6 @@ typedef struct {
 #define qd_var(name, q, d) \
     qd name = {q, d}
 
-//
-// define a physical constant
-//
-#define phase_i(a, b, c) \
-    {a, b, c}
-#define alpha_beta(alpha, beta) \
-    {alpha, beta}
-#define qd(q, d) \
-    {q, d}
-
 #ifdef __cplusplus
 }
 #endif 
