@@ -19,6 +19,7 @@ extern "C" {
 //
 // table of sin and cos function value
 // 
+// TODO: to be optimized
 // note:
 //  type            q15_fixed
 //  interval        [0, pi/2]
@@ -480,6 +481,7 @@ q_fixed q_fixed_math_abs(q_fixed x1)
 //
 // sin and cos function
 //
+// TODO: to be optimized
 static inline
 void q_fixed_math_sin_cos(
     q_fixed *sin, q_fixed *cos,
