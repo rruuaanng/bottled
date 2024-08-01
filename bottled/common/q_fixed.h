@@ -23,7 +23,7 @@ extern "C" {
 //  type            q15_fixed
 //  interval        [0, pi/2]
 //  index           [0, 254) => [0, 253]
-#define SIN_COS_TABLE_SIZE               0xFE
+#define SIN_COS_TABLE_SIZE               0xFD
 #define SIN_COS_TABLE   { \
     0x0,   0xCB,  0x196, 0x261, 0x329, 0x3F4, 0x4BF, 0x58A, \
     0x656, 0x71D, 0x7E9, 0x8B4, 0x97C, 0xA47, 0xB12, 0xBDA, \
@@ -58,7 +58,7 @@ extern "C" {
     0x7F86,0x7F97,0x7FA4,0x7FB4,0x7FC1,0x7FCE,0x7FD8,0x7FE2, \
     0x7FE9,0x7FEF,0x7FF6,0x7FF9,0x7FFC,0x8000}
 
-static int32_t sin_cos_lut[SIN_COS_TABLE_SIZE] = SIN_COS_TABLE;
+int32_t sin_cos_lut[SIN_COS_TABLE_SIZE + 1] = SIN_COS_TABLE;
 
 //
 // utils
@@ -474,6 +474,47 @@ q_fixed q_fixed_math_abs(q_fixed x1)
         return x1 * -1;
     } else {
         return x1;
+    }
+}
+#include <stdio.h>
+//
+// sin and cos function
+//
+static inline
+void q_fixed_math_sin_cos(
+    q_fixed *sin, q_fixed *cos,
+    int angle)
+{
+#define QUAD_0_90        0U
+#define QUAD_90_180      1U
+#define QUAD_180_270     2U
+#define QUAD_270_360     3U
+    int i;
+    int quadrant;
+
+    angle %= 360;
+    quadrant = angle / 90;
+
+    i = angle * SIN_COS_TABLE_SIZE / 90;
+    i %= SIN_COS_TABLE_SIZE;
+    
+    switch (quadrant) {
+    case QUAD_0_90:    // [0, 90°)
+        *sin = sin_cos_lut[i];
+        *cos = sin_cos_lut[SIN_COS_TABLE_SIZE - i];
+        break;
+    case QUAD_90_180:  // [90, 180°)
+        *sin = sin_cos_lut[SIN_COS_TABLE_SIZE - i];
+        *cos = -sin_cos_lut[i];
+        break;
+    case QUAD_180_270: // [180, 270°)
+        *sin = -sin_cos_lut[i];
+        *cos = -sin_cos_lut[SIN_COS_TABLE_SIZE - i];
+        break;
+    case QUAD_270_360: // [270, 360°]
+        *sin = -sin_cos_lut[SIN_COS_TABLE_SIZE - i];
+        *cos = sin_cos_lut[i];
+        break;
     }
 }
 
