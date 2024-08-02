@@ -18,8 +18,7 @@ extern "C" {
 
 //
 // table of sin and cos function value
-// 
-// TODO: to be optimized
+//
 // note:
 //  type            q15_fixed
 //  interval        [0, pi/2]
@@ -242,7 +241,7 @@ void q_fixed_sub(
 #define q7_fixed_sub(q_fixed_ptr, x1, x2) \
     q_fixed_sub(q_fixed_ptr, x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7)
 
-//
+// BUG: 卧槽, 之前还能算来着
 // fixed-point number multiplication
 //
 // argument:
@@ -482,7 +481,6 @@ q_fixed q_fixed_math_abs(q_fixed x1)
 //
 // sin and cos function
 //
-// TODO: to be optimized
 static inline
 void q_fixed_math_sin_cos(
     q_fixed *sin, q_fixed *cos,
