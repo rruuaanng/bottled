@@ -34,7 +34,17 @@ my-project
 
 int main(int argc, char const *argv[])
 {
+    q_fixed x1, x2;
+    q_fixed y;
+    float y_f;
 
+    x1 = q15(0.13125);
+    x2 = q15(0.31541);
+    
+    q15_fixed_add(&y, x1, x2);
+    q15_fixed_to_float(&y_f, y);
+
+    printf("result: %.4f ", y_f);   // 0.4466
     return 0;
 }
 ```
