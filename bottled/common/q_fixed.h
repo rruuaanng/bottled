@@ -84,6 +84,7 @@ typedef int32_t                         q_fixed;
 #define q_fixed_var(name, fixed) \
     q_fixed name = fixed
 
+#define qxx(n_float, wf)                __to_q_fixed(n_float, wf)
 #define q15(n_float)                    __to_q_fixed(n_float, Q_FIXED_WF_15)
 #define q14(n_float)                    __to_q_fixed(n_float, Q_FIXED_WF_14)
 #define q12(n_float)                    __to_q_fixed(n_float, Q_FIXED_WF_12)
@@ -182,13 +183,13 @@ void q_fixed_add(
 
     n1 = x1;
     n2 = x2;
-    
+
     // align decimal places
     wf_diff = diff(x1_wf, x2_wf);
     if (x1_wf < x2_wf) {
-        n2 <<= wf_diff;
-    } else {
         n1 <<= wf_diff;
+    } else {
+        n2 <<= wf_diff;
     }
 
     *y = n1 + n2;
