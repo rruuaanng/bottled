@@ -477,7 +477,7 @@ q_fixed q_fixed_math_abs(q_fixed x1)
         return x1;
     }
 }
-#include <stdio.h>
+
 //
 // sin and cos function
 //
