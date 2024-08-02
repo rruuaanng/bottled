@@ -22,7 +22,7 @@ extern "C" {
 // 4. beta = 2/3 * (sqrt(3)/2Ia + sqrt(3)Ib)
 // 5. beta = sqrt(3)/3Ia + 2sqrt(3)/3Ib
 static inline
-void clarke_direct_3p_q_fixed(alpha_beta *ab, phase_i v)
+void clarke_direct_3p_q15_fixed(alpha_beta *ab, phase_i v)
 {
     float x0, x1;
     const int32_t sqrt3 = Q15_FIXED_SQRT3; // q15
@@ -37,7 +37,7 @@ void clarke_direct_3p_q_fixed(alpha_beta *ab, phase_i v)
 // clarke inverse transform
 //
 static inline
-void clarke_inverse_2p_q_fixed(phase_i *v, alpha_beta ab)
+void clarke_inverse_2p_q15_fixed(phase_i *v, alpha_beta ab)
 {
     const int32_t sqrt3 = Q15_FIXED_SQRT3; // q15
 

@@ -11,7 +11,7 @@ extern "C" {
 // park transform
 //
 static inline
-void park_direct_2p_q_fixed(
+void park_direct_2p_q15_fixed(
     q_d *qd, alpha_beta ab, int theta_deg)
 {
     q_fixed sin_theta, cos_theta;
@@ -25,7 +25,7 @@ void park_direct_2p_q_fixed(
 // park inverse transform
 //
 static inline
-void park_inverse_2p_q_fixed(
+void park_inverse_2p_q15_fixed(
     alpha_beta *ab, q_d qd, int theta_deg)
 {
     q_fixed sin_theta, cos_theta;
