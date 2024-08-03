@@ -22,14 +22,14 @@ extern "C" {
 // 4. beta = 2/3 * (sqrt(3)/2Ia + sqrt(3)Ib)
 // 5. beta = sqrt(3)/3Ia + 2sqrt(3)/3Ib
 static inline
-void clarke_direct_3p(alpha_beta *ab, phase_i v)
+void clarke_direct_3p(alpha_beta *ab, phase_i i)
 {
     float x0, x1;
     const int32_t sqrt3 = Q15_FIXED_SQRT3; // q15
     
-    ab->alpha = v.ia;
-    x0 = (sqrt3 * v.ia) / 3;
-    x1 = (2 * sqrt3 * v.ib) / 3;
+    ab->alpha = i.ia;
+    x0 = (sqrt3 * i.ia) / 3;
+    x1 = (2 * sqrt3 * i.ib) / 3;
     ab->beta = x0 + x1;
 }
 
@@ -37,13 +37,13 @@ void clarke_direct_3p(alpha_beta *ab, phase_i v)
 // clarke inverse transform
 //
 static inline
-void clarke_inverse_2p(phase_i *v, alpha_beta ab)
+void clarke_inverse_2p(phase_i *i, alpha_beta ab)
 {
     const int32_t sqrt3 = Q15_FIXED_SQRT3; // q15
 
-    v->ia = ab.alpha;
-    v->ib = (0 - ab.alpha + sqrt3 * ab.beta) / 2;
-    v->ic = (0 - ab.alpha - sqrt3 * ab.beta) / 2;
+    i->ia = ab.alpha;
+    i->ib = (0 - ab.alpha + sqrt3 * ab.beta) / 2;
+    i->ic = (0 - ab.alpha - sqrt3 * ab.beta) / 2;
 }
 
 #ifdef __cplusplus
