@@ -90,6 +90,24 @@ typedef int32_t                         q_fixed;
 #define q7(n_float)                     __to_q_fixed(n_float, Q_FIXED_WF_7)
 
 //
+// q_fixed multiplying and dividing multiples of two
+//
+#define q_fixed_mul2(fixed)             ((fixed) << (1))
+#define q_fixed_mul4(fixed)             ((fixed) << (2))
+#define q_fixed_mul8(fixed)             ((fixed) << (3))
+#define q_fixed_mul16(fixed)            ((fixed) << (4))
+#define q_fixed_mul32(fixed)            ((fixed) << (5))
+#define q_fixed_mul64(fixed)            ((fixed) << (6))
+
+#define q_fixed_div2(fixed)             ((fixed) >> (1))
+#define q_fixed_div4(fixed)             ((fixed) >> (2))
+#define q_fixed_div8(fixed)             ((fixed) >> (3))
+#define q_fixed_div16(fixed)            ((fixed) >> (4))
+#define q_fixed_div32(fixed)            ((fixed) >> (5))
+#define q_fixed_div64(fixed)            ((fixed) >> (6))
+
+
+//
 // float-point number convert to fixed-point number
 //
 // argument:
@@ -251,33 +269,39 @@ void q_fixed_sub(
 static inline
 void q_fixed_mul(
     q_fixed *y,
+    q_fixed x1, q_fixed x2, int wf)
+{
+    int32_t x1_low, x2_low;
+    int32_t x1_high, x2_high;
+    int64_t x1_tmp, x2_tmp, tmp;
+
+    x1_low = x1 & 0xFFFF;
+    x2_low = x2 & 0xFFFF;
+    x1_high = x1 >> 16;
+    x2_high = x2 >> 16;
+
+    tmp = x1_low * x2_low;
+    tmp += (int_fast64_t)(x1_high * x2_low + x1_low * x2_high) << 16;
+    tmp += (int_fast64_t)(x1_high * x2_high) << 32;
+    tmp >>= wf;
+
+    *y = (int_fast32_t)tmp;
+}
+
+//
+// fixed-point number division
+//
+// argument:
+// y            result
+// x1           operand number1
+// x2           operand number2
+static inline
+void q_fixed_div(
+    q_fixed *y,
     q_fixed x1, q_fixed x2)
 {
-    *y = x1 * x2;
+
 }
-#define q15_fixed_mul_q30(q_fixed_ptr, x1, x2) \
-    q_fixed_mul(q_fixed_ptr, x1, x2)
-#define q14_fixed_mul_q28(q_fixed_ptr, x1, x2) \
-    q_fixed_mul(q_fixed_ptr, x1, x2)
-#define q12_fixed_mul_q24(q_fixed_ptr, x1, x2) \
-    q_fixed_mul(q_fixed_ptr, x1, x2)
-#define q7_fixed_mul_q14(q_fixed_ptr, x1, x2) \
-    q_fixed_mul(q_fixed_ptr, x1, x2)
-
-// //
-// // fixed-point number division
-// //
-// // argument:
-// // y            result
-// // x1           operand number1
-// // x2           operand number2
-// static inline
-// void q_fixed_div(
-//     q_fixed *y,
-//     q_fixed x1, q_fixed x2)
-// {
-
-// }
 
 
 //
