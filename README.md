@@ -28,7 +28,7 @@ my-project
 ## example
 
 ```C
-#include <iostream>
+#include <stdio.h>
 #include <common/q_fixed.h>
 
 
