@@ -82,6 +82,8 @@ typedef int32_t                         q_fixed;
 
 #define q_fixed_var(name, fixed) \
     q_fixed name = fixed
+#define q_fixed_fvar(name, n_float, wf) \
+    q_fixed name = __to_q_fixed(n_float, wf)
 
 #define qxx(n_float, wf)                __to_q_fixed(n_float, wf)
 #define q15(n_float)                    __to_q_fixed(n_float, Q_FIXED_WF_15)
