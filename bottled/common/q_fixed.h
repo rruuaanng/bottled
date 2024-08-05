@@ -22,7 +22,7 @@ extern "C" {
 // note:
 //  type            q15_fixed
 //  interval        [0, pi/2]
-//  index           [0, 254) => [0, 253]
+//  index           [0, 255) => [0, 254]
 #define SIN_COS_TABLE_SIZE               0xFF
 #define SIN_COS_TABLE   { \
     0x0000,0x00C9,0x0192,0x025B,0x0324,0x03ED,0x04B6,0x057F,\
