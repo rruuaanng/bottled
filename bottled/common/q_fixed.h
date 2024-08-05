@@ -282,6 +282,7 @@ void q_fixed_mul(
     x1_high = x1 >> 16;
     x2_high = x2 >> 16;
 
+    // karatsuba algorithm
     tmp = x1_low * x2_low;
     tmp += (int_fast64_t)(x1_high * x2_low + x1_low * x2_high) << 16;
     tmp += (int_fast64_t)(x1_high * x2_high) << 32;
