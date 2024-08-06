@@ -126,14 +126,26 @@ void float_to_q_fixed(
 
     *fixed = __to_q_fixed(n, wf);
 }
-#define float_to_q15_fixed(q_fixed_ptr, n_float) \
-    float_to_q_fixed(q_fixed_ptr, n_float, Q_FIXED_WF_15)
-#define float_to_q14_fixed(q_fixed_ptr, n_float) \
-    float_to_q_fixed(q_fixed_ptr, n_float, Q_FIXED_WF_14)
-#define float_to_q12_fixed(q_fixed_ptr, n_float) \
-    float_to_q_fixed(q_fixed_ptr, n_float, Q_FIXED_WF_12)
-#define float_to_q7_fixed(q_fixed_ptr, n_float) \
-    float_to_q_fixed(q_fixed_ptr, n_float, Q_FIXED_WF_7)
+#define float_to_q15_fixed(n_float) ({ \
+    q_fixed __q_fixed_val; \
+    float_to_q_fixed(&__q_fixed_val, n_float, Q_FIXED_WF_15); \
+    __q_fixed_val; \
+})
+#define float_to_q14_fixed(n_float) ({ \
+    q_fixed __q_fixed_val; \
+    float_to_q_fixed(&__q_fixed_val, n_float, Q_FIXED_WF_14); \
+    __q_fixed_val; \
+})
+#define float_to_q12_fixed(n_float) ({ \
+    q_fixed __q_fixed_val; \
+    float_to_q_fixed(&__q_fixed_val, n_float, Q_FIXED_WF_12); \
+    __q_fixed_val; \
+})
+#define float_to_q7_fixed(n_float) ({ \
+    q_fixed __q_fixed_val; \
+    float_to_q_fixed(&__q_fixed_val, n_float, Q_FIXED_WF_7); \
+    __q_fixed_val; \
+})
 
 //
 // fixed-point number convert to float-point number
@@ -174,14 +186,26 @@ int q_fixed_to_float(float *n, q_fixed fixed, int wf)
     *n = *(float *)&tmp;
     return 0;
 }
-#define q15_fixed_to_float(float_ptr, fixed) \
-    q_fixed_to_float(float_ptr, fixed, Q_FIXED_WF_15)
-#define q14_fixed_to_float(float_ptr, fixed) \
-    q_fixed_to_float(float_ptr, fixed, Q_FIXED_WF_14)
-#define q12_fixed_to_float(float_ptr, fixed) \
-    q_fixed_to_float(float_ptr, fixed, Q_FIXED_WF_12)
-#define q7_fixed_to_float(float_ptr, fixed) \
-    q_fixed_to_float(float_ptr, fixed, Q_FIXED_WF_7)
+#define q15_fixed_to_float(fixed) ({ \
+    float __float_val; \
+    q_fixed_to_float(&__float_val, fixed, Q_FIXED_WF_15); \
+    __float_val; \
+})
+#define q14_fixed_to_float(fixed) ({ \
+    float __float_val; \
+    q_fixed_to_float(&__float_val, fixed, Q_FIXED_WF_14); \
+    __float_val; \
+})
+#define q12_fixed_to_float(fixed) ({ \
+    float __float_val; \
+    q_fixed_to_float(&__float_val, fixed, Q_FIXED_WF_12); \
+    __float_val; \
+})
+#define q7_fixed_to_float(fixed) ({ \
+    float __float_val; \
+    q_fixed_to_float(&__float_val, fixed, Q_FIXED_WF_7); \
+    __float_val; \
+})
 
 //
 // fixed-point number addition
@@ -213,14 +237,27 @@ void q_fixed_add(
 
     *y = n1 + n2;
 }
-#define q15_fixed_add(q_fixed_ptr, x1, x2) \
-    q_fixed_add(q_fixed_ptr, x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15)
-#define q14_fixed_add(q_fixed_ptr, x1, x2) \
-    q_fixed_add(q_fixed_ptr, x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14)
-#define q12_fixed_add(q_fixed_ptr, x1, x2) \
-    q_fixed_add(q_fixed_ptr, x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12)
-#define q7_fixed_add(q_fixed_ptr, x1, x2) \
-    q_fixed_add(q_fixed_ptr, x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7)
+#define q15_fixed_add(x1, x2) ({ \
+    q_fixed __q_fixed_val; \
+    q_fixed_add(&__q_fixed_val, x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15); \
+    __q_fixed_val; \
+})
+#define q14_fixed_add(x1, x2) ({ \
+    q_fixed __q_fixed_val; \
+    q_fixed_add(&__q_fixed_val, x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14); \
+    __q_fixed_val; \
+})
+#define q12_fixed_add(x1, x2) ({ \
+    q_fixed __q_fixed_val; \
+    q_fixed_add(&__q_fixed_val, x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12); \
+    __q_fixed_val; \
+})
+#define q7_fixed_add(x1, x2) ({ \
+    q_fixed __q_fixed_val; \
+    q_fixed_add(&__q_fixed_val, x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7); \
+    __q_fixed_val; \
+})
+    
 
 
 //
@@ -252,16 +289,28 @@ void q_fixed_sub(
 
     *y = n1 - n2;
 }
-#define q15_fixed_sub(q_fixed_ptr, x1, x2) \
-    q_fixed_sub(q_fixed_ptr, x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15)
-#define q14_fixed_sub(q_fixed_ptr, x1, x2) \
-    q_fixed_sub(q_fixed_ptr, x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14)
-#define q12_fixed_sub(q_fixed_ptr, x1, x2) \
-    q_fixed_sub(q_fixed_ptr, x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12)
-#define q7_fixed_sub(q_fixed_ptr, x1, x2) \
-    q_fixed_sub(q_fixed_ptr, x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7)
+#define q15_fixed_sub(x1, x2) ({ \
+    q_fixed __q_fixed_val; \
+    q_fixed_sub(&__q_fixed_val, x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15); \
+    __q_fixed_val; \
+})
+#define q14_fixed_sub(x1, x2) ({ \
+    q_fixed __q_fixed_val; \
+    q_fixed_sub(&__q_fixed_val, x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14); \
+    __q_fixed_val; \
+})
+#define q12_fixed_sub(x1, x2) ({ \
+    q_fixed __q_fixed_val; \
+    q_fixed_sub(&__q_fixed_val, x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12); \
+    __q_fixed_val; \
+})
+#define q7_fixed_sub(x1, x2) ({ \
+    q_fixed __q_fixed_val; \
+    q_fixed_sub(&__q_fixed_val, x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7); \
+    __q_fixed_val; \
+})
+    
 
-// BUG: 卧槽, 之前还能算来着
 // fixed-point number multiplication
 //
 // argument:
@@ -290,6 +339,26 @@ void q_fixed_mul(
 
     *y = (int_fast32_t)tmp;
 }
+#define q15_fixed_mul(x1, x2) ({ \
+    q_fixed __q_fixed_val; \
+    q_fixed_mul(&__q_fixed_val, x1, x2, Q_FIXED_WF_15); \
+    __q_fixed_val; \
+})
+#define q14_fixed_mul(x1, x2) ({ \
+    q_fixed __q_fixed_val; \
+    q_fixed_mul(&__q_fixed_val, x1, x2, Q_FIXED_WF_14); \
+    __q_fixed_val; \
+})
+#define q12_fixed_mul(x1, x2) ({ \
+    q_fixed __q_fixed_val; \
+    q_fixed_mul(&__q_fixed_val, x1, x2, Q_FIXED_WF_12); \
+    __q_fixed_val; \
+})
+#define q7_fixed_mul(x1, x2) ({ \
+    q_fixed __q_fixed_val; \
+    q_fixed_mul(&__q_fixed_val, x1, x2, Q_FIXED_WF_7); \
+    __q_fixed_val; \
+})
 
 //
 // fixed-point number division
@@ -301,11 +370,138 @@ void q_fixed_mul(
 static inline
 void q_fixed_div(
     q_fixed *y,
-    q_fixed x1, q_fixed x2)
+    q_fixed x1, q_fixed x2, int wf)
 {
+#define ____right(x1, x2)              (uint_fast32_t)(((uint_fast64_t)x1 * (uint_fast64_t)x2) >> 31)
+#define ____sub_tmp(tmp)               (-((uint_fast32_t)tmp - 0x80000000))
+    uint8_t idx, symb_flag = 0;
+    uint_fast32_t tmp;
+    uint_fast32_t div_factor;
+    uint_fast32_t x1_tmp_q32;
+    uint_fast32_t x2_tmp_q32;
+    uint_fast32_t result;
+    uint_fast64_t x1_tmp_q64;
+    
+    const uint8_t div_lut_q6[] = {
+        0x7F, 0x7D, 0x7B, 0x79, 0x78, 0x76, 0x74, 0x73, 
+        0x71, 0x6F, 0x6E, 0x6D, 0x6B, 0x6A, 0x68, 0x67, 
+        0x66, 0x65, 0x63, 0x62, 0x61, 0x60, 0x5F, 0x5E, 
+        0x5D, 0x5C, 0x5B, 0x5A, 0x59, 0x58, 0x57, 0x56, 
+        0x55, 0x54, 0x53, 0x52, 0x52, 0x51, 0x50, 0x4F, 
+        0x4E, 0x4E, 0x4D, 0x4C, 0x4C, 0x4B, 0x4A, 0x49, 
+        0x49, 0x48, 0x48, 0x47, 0x46, 0x46, 0x45, 0x45, 
+        0x44, 0x43, 0x43, 0x42, 0x42, 0x41, 0x41, 0x40,
+        0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    };
 
+    
+    // if the divisor is less than zero
+    // mark it as a negative number
+    if (x2 <= 0) {
+        if (x2 == 0) {
+            goto error;
+        }
+        else {
+            symb_flag = 1;
+            x2 = -x2;
+        }
+    }
+
+    // if x1 is less than zero
+    // take the absolute value of x1
+    if (x1 < 0) {
+        symb_flag ^= 1;
+        x1 = -x1;
+    }
+
+    // convert to 64bit
+    x1_tmp_q64 = (uint_fast64_t)x1;
+    x2_tmp_q32 = (uint_fast32_t)x2;
+
+    // if x2 is less than q15(32768)
+    // scale to [0.5, 1]
+    while (x2_tmp_q32 < 0x40000000) {
+        x2_tmp_q32 <<= 1;
+        x1_tmp_q64 <<= 1;
+    }
+
+    // restricted between q0 and q30
+    if (wf < 31) {
+        x1_tmp_q64 >>= (31 - wf - 1);
+    }
+    else {
+        x1_tmp_q64 <<= 1;
+    }
+
+    // check overflow
+    if (x1_tmp_q64 >> 32) {
+        goto error;
+    }
+    else {
+        x1_tmp_q32 = (uint_fast32_t)x1_tmp_q64;
+    }
+
+    // use the left seven digits
+    idx = x2_tmp_q32 >> 24;
+    idx -= 64;
+    div_factor = (uint_fast32_t)div_lut_q6[idx] << 24;
+
+    // 1
+    tmp = ____right(div_factor, x2_tmp_q32);
+    tmp = ____sub_tmp(tmp);;
+    tmp = tmp << 1;
+    div_factor = ____right(div_factor, tmp);
+
+    // 2
+    tmp = ____right(div_factor, x2_tmp_q32);
+    tmp = ____sub_tmp(tmp);;
+    tmp = tmp << 1;
+    div_factor = ____right(div_factor, tmp);
+
+    // 3
+    tmp = ____right(div_factor, x2_tmp_q32);
+    tmp = ____sub_tmp(tmp);
+    tmp = tmp << 1;
+    div_factor = ____right(div_factor, tmp);
+
+    result = ____right(div_factor, x1_tmp_q32);
+
+    if (result > INT32_MAX) {
+        goto error;
+    }
+
+    // if the sign is negative
+    // return negative number
+    if (symb_flag) {
+        *y = -(int_fast32_t)result;
+    } else {
+        *y = (int_fast32_t)result;
+    }
+    return ;
+
+error:
+    *y = 0;
 }
-
+#define q15_fixed_div(x1, x2) ({ \
+    q_fixed __q_fixed_val; \
+    q_fixed_div(&__q_fixed_val, x1, x2, Q_FIXED_WF_15); \
+    __q_fixed_val; \
+})
+#define q14_fixed_div(x1, x2) ({ \
+    q_fixed __q_fixed_val; \
+    q_fixed_div(&__q_fixed_val, x1, x2, Q_FIXED_WF_14); \
+    __q_fixed_val; \
+})
+#define q12_fixed_div(x1, x2) ({ \
+    q_fixed __q_fixed_val; \
+    q_fixed_div(&__q_fixed_val, x1, x2, Q_FIXED_WF_12); \
+    __q_fixed_val; \
+})
+#define q7_fixed_div(x1, x2) ({ \
+    q_fixed __q_fixed_val; \
+    q_fixed_div(&__q_fixed_val, x1, x2, Q_FIXED_WF_7); \
+    __q_fixed_val; \
+})
 
 //
 // fixed-point number greater than comparison
