@@ -8,8 +8,7 @@ extern "C" {
 //
 // import standard library
 //
-#include <stdint.h>
-#include <stdbool.h>
+#include <common/types.h>
 #include <common/q_fixed.h>
 
 //
