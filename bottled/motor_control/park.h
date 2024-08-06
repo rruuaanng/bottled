@@ -14,11 +14,18 @@ static inline
 void park_direct_2p(
     q_d *qd, alpha_beta ab, int theta_deg)
 {
+    q_fixed x0, x1;
     q_fixed sin_theta, cos_theta;
 
     q_fixed_math_sin_cos_q15(&sin_theta, &cos_theta, theta_deg);
-    qd->d = (ab.alpha * cos_theta) + (ab.beta * sin_theta);
-    qd->q = (0 - ab.alpha * sin_theta) + (ab.beta * cos_theta);
+
+    x0 = q15_fixed_mul(ab.alpha, cos_theta);
+    x1 = q15_fixed_mul(ab.beta, sin_theta);
+    qd->d = q15_fixed_add(x0, x1);
+    
+    x0 = q15_fixed_mul(-ab.alpha, sin_theta);
+    x1 = q15_fixed_mul(ab.beta, cos_theta);
+    qd->q = q15_fixed_add(x0, x1);
 }
 
 //
@@ -28,11 +35,17 @@ static inline
 void park_inverse_2p(
     alpha_beta *ab, q_d qd, int theta_deg)
 {
+    q_fixed x0, x1;
     q_fixed sin_theta, cos_theta;
 
     q_fixed_math_sin_cos_q15(&sin_theta, &cos_theta, theta_deg);
-    ab->alpha = (qd.d * cos_theta) - (qd.q * sin_theta);
-    ab->beta = (qd.d * sin_theta) + (qd.q * cos_theta);
+    x0 = q15_fixed_mul(qd.d, cos_theta);
+    x1 = q15_fixed_mul(qd.q, sin_theta);
+    ab->alpha = q15_fixed_sub(x0, x1);
+    
+    x0 = q15_fixed_mul(qd.d, sin_theta);
+    x1 = q15_fixed_mul(qd.q, cos_theta);
+    ab->beta = q15_fixed_add(x0, x1);
 }
 
 #ifdef __cplusplus
