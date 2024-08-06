@@ -25,7 +25,7 @@ static inline
 void clarke_direct_3p(alpha_beta *ab, phase_i i)
 {
     float x0, x1;
-    const int32_t sqrt3 = Q15_FIXED_SQRT3; // q15
+    const q_fixed sqrt3 = Q15_FIXED_SQRT3; // q15
     
     ab->alpha = i.ia;
     x0 = (sqrt3 * i.ia) / 3;
@@ -39,7 +39,7 @@ void clarke_direct_3p(alpha_beta *ab, phase_i i)
 static inline
 void clarke_inverse_2p(phase_i *i, alpha_beta ab)
 {
-    const int32_t sqrt3 = Q15_FIXED_SQRT3; // q15
+    const q_fixed sqrt3 = Q15_FIXED_SQRT3; // q15
 
     i->ia = ab.alpha;
     i->ib = (0 - ab.alpha + sqrt3 * ab.beta) / 2;
