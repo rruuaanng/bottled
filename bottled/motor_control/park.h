@@ -16,7 +16,7 @@ void park_direct_2p(
 {
     q_fixed sin_theta, cos_theta;
 
-    q_fixed_math_sin_cos(&sin_theta, &cos_theta, theta_deg);
+    q_fixed_math_sin_cos_q15(&sin_theta, &cos_theta, theta_deg);
     qd->d = (ab.alpha * cos_theta) + (ab.beta * sin_theta);
     qd->q = (0 - ab.alpha * sin_theta) + (ab.beta * cos_theta);
 }
@@ -30,7 +30,7 @@ void park_inverse_2p(
 {
     q_fixed sin_theta, cos_theta;
 
-    q_fixed_math_sin_cos(&sin_theta, &cos_theta, theta_deg);
+    q_fixed_math_sin_cos_q15(&sin_theta, &cos_theta, theta_deg);
     ab->alpha = (qd.d * cos_theta) - (qd.q * sin_theta);
     ab->beta = (qd.d * sin_theta) + (qd.q * cos_theta);
 }
