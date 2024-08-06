@@ -113,9 +113,9 @@ typedef int32_t                         q_fixed;
 // float-point number convert to fixed-point number
 //
 // argument:
-// fixed    q_fixed object ptr
-// n        float-point number
-// wf       bit width
+//  fixed    q_fixed object ptr
+//  n        float-point number
+//  wf       bit width
 static inline
 void float_to_q_fixed(
     q_fixed *fixed,
@@ -151,8 +151,9 @@ void float_to_q_fixed(
 // fixed-point number convert to float-point number
 //
 // argument:
-// n        float-point number ptr
-// fixed    q_fixed object
+//  n        float-point number ptr
+//  fixed    q_fixed object
+//  wf       bit width
 static inline
 int q_fixed_to_float(float *n, q_fixed fixed, int wf)
 {
@@ -211,10 +212,11 @@ int q_fixed_to_float(float *n, q_fixed fixed, int wf)
 // fixed-point number addition
 //
 // argument:
-// y        q_fixed object ptr
-// x1       operand number1
-// x2       operand number2
-// is_sub   subtraction or not
+//  y        q_fixed object ptr
+//  x1       operand number1
+//  x2       operand number2
+//  x1_wf    x1 bit width
+//  x2_wf    x2 bit width
 static inline
 void q_fixed_add(
     q_fixed *y, 
@@ -264,9 +266,11 @@ void q_fixed_add(
 // fixed-point number subtraction
 //
 // argument:
-// y        q_fixed object ptr
-// x1       operand number1
-// x2       operand number2
+//  y        q_fixed object ptr
+//  x1       operand number1
+//  x2       operand number2
+//  x1_wf    x1 bit width
+//  x2_wf    x2 bit width
 static inline
 void q_fixed_sub(
     q_fixed *y, 
@@ -314,9 +318,11 @@ void q_fixed_sub(
 // fixed-point number multiplication
 //
 // argument:
-// y            q_fixed object ptr
-// x1           operand number1
-// x2           operand number2
+//  y            q_fixed object ptr
+//  x1           operand number1
+//  x2           operand number2
+//  x1_wf    x1 bit width
+//  x2_wf    x2 bit width
 static inline
 void q_fixed_mul(
     q_fixed *y,
@@ -364,9 +370,11 @@ void q_fixed_mul(
 // fixed-point number division
 //
 // argument:
-// y            result
-// x1           operand number1
-// x2           operand number2
+//  y            result
+//  x1           operand number1
+//  x2           operand number2
+// note:
+//  copy for IQmath (it's so hard)
 static inline
 void q_fixed_div(
     q_fixed *y,
@@ -507,8 +515,10 @@ error:
 // fixed-point number greater than comparison
 //
 // argument:
-// x1           operand number1
-// x2           operand number2
+//  x1           operand number1
+//  x2           operand number2
+//  x1_wf    x1 bit width
+//  x2_wf    x2 bit width
 static inline
 bool q_fixed_gt(
     q_fixed x1, q_fixed x2,
@@ -536,8 +546,10 @@ bool q_fixed_gt(
 // fixed-point number greater than comparison with equal
 //
 // argument:
-// x1           operand number1
-// x2           operand number2
+//  x1           operand number1
+//  x2           operand number2
+//  x1_wf    x1 bit width
+//  x2_wf    x2 bit width
 static inline
 bool q_fixed_gte(
     q_fixed x1, q_fixed x2,
@@ -565,8 +577,10 @@ bool q_fixed_gte(
 // fixed-point number less than comparison
 //
 // argument:
-// x1           operand number1
-// x2           operand number2
+//  x1           operand number1
+//  x2           operand number2
+//  x1_wf    x1 bit width
+//  x2_wf    x2 bit width
 static inline
 bool q_fixed_lt(
     q_fixed x1, q_fixed x2,
@@ -593,8 +607,10 @@ bool q_fixed_lt(
 // fixed-point number less than comparison with equal
 //
 // argument:
-// x1           operand number1
-// x2           operand number2
+//  x1           operand number1
+//  x2           operand number2
+//  x1_wf    x1 bit width
+//  x2_wf    x2 bit width
 static inline
 bool q_fixed_lte(
     q_fixed x1, q_fixed x2,
@@ -621,8 +637,10 @@ bool q_fixed_lte(
 // fixed-point number equal comparison
 //
 // argument:
-// x1           operand number1
-// x2           operand number2
+//  x1           operand number1
+//  x2           operand number2
+//  x1_wf    x1 bit width
+//  x2_wf    x2 bit width
 static inline
 bool q_fixed_eq(
     q_fixed x1, q_fixed x2,
@@ -649,8 +667,10 @@ bool q_fixed_eq(
 // fixed-point number not equal comparison
 //
 // argument:
-// x1           operand number1
-// x2           operand number2
+//  x1       operand number1
+//  x2       operand number2
+//  x1_wf    x1 bit width
+//  x2_wf    x2 bit width
 static inline
 bool q_fixed_ne(
     q_fixed x1, q_fixed x2,
@@ -676,6 +696,8 @@ bool q_fixed_ne(
 //
 // symbolic function
 //
+// argument:
+//  x1       operand number1
 static inline
 int q_fixed_math_sign(q_fixed x1)
 {
@@ -691,6 +713,8 @@ int q_fixed_math_sign(q_fixed x1)
 //
 // absolute value function
 //
+// argument:
+//  x1       operand number1
 static inline
 q_fixed q_fixed_math_abs(q_fixed x1)
 {
@@ -704,6 +728,10 @@ q_fixed q_fixed_math_abs(q_fixed x1)
 //
 // sin and cos function
 //
+// argument:
+//  sin      sin function value
+//  cos      cos function value
+//  angle    measure angle
 static inline
 void q_fixed_math_sin_cos_q15(
     q_fixed *sin, q_fixed *cos,
