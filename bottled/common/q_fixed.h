@@ -705,7 +705,7 @@ q_fixed q_fixed_math_abs(q_fixed x1)
 // sin and cos function
 //
 static inline
-void q_fixed_math_sin_cos(
+void q_fixed_math_sin_cos_q15(
     q_fixed *sin, q_fixed *cos,
     int angle)
 {
