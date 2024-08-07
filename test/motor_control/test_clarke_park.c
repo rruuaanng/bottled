@@ -23,12 +23,12 @@ int main(int argc, char const *argv[])
         q15_fixed_to_float(ab.alpha),
         q15_fixed_to_float(ab.beta));
 
-    park_direct_2p(&qd, ab, 30);
+    park_direct_2p_q15(&qd, ab, 30);
     printf("park -> q: %.4f \t d: %.4f\n",
         q15_fixed_to_float(qd.q),
         q15_fixed_to_float(qd.d));
 
-    park_inverse_2p(&ab, qd, 30);
+    park_inverse_2p_q15(&ab, qd, 30);
     printf("park inverse -> alpha: %.4f \t beta: %.4f\n",
         q15_fixed_to_float(ab.alpha),
         q15_fixed_to_float(ab.beta));
