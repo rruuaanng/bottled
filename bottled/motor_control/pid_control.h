@@ -11,7 +11,7 @@ extern "C" {
 // PID control
 //
 static inline
-void pid_control_q_fixed(
+void pid_control(
     int32_t *err_sum, int32_t *prev_err, 
     int32_t *out,
     int32_t kp, int32_t ki, int32_t kd,

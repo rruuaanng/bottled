@@ -11,7 +11,7 @@ extern "C" {
 // kalman filter
 //
 static inline
-void kalman_filter_q_fixed(
+void kalman_filter(
     int32_t *out,
     int32_t *x_last, int32_t *p_last,
     int32_t measured_val, int32_t q, int32_t r)
