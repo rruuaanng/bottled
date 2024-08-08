@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #include <motor_control/common.h>
-#include <stdio.h>
+
 //
 // PID control
 //
