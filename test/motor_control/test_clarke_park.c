@@ -7,6 +7,10 @@ int main(int argc, char const *argv[])
 {
     alpha_beta ab;
     q_d qd;
+    float ia_f, ib_f, ic_f;
+    float alpha_f, beta_f;
+    float q_f, d_f;
+
 
     int wf = 15;
     qfixed_fvar(x1, 25.15, wf);
@@ -14,31 +18,31 @@ int main(int argc, char const *argv[])
     phase_i_var(i, x1, x2, 0);
 
     puts("========================qfixed========================");
-    printf("A: %.4f \t B: %.4f \t C: %.4f\n",
-                q15_fixed_to_float(i.ia),
-                q15_fixed_to_float(i.ib),
-                q15_fixed_to_float(i.ic));
+    qfixed_to_float(&ia_f, i.ia, wf);
+    qfixed_to_float(&ib_f, i.ib, wf);
+    qfixed_to_float(&ic_f, i.ic, wf);
+    printf("A: %.4f \t B: %.4f \t C: %.4f\n", ia_f, ib_f, ic_f);
 
     clarke_direct_3p_q15(&ab, i);
-    printf("clarke -> alpha: %.4f \t beta: %.4f\n",
-        q15_fixed_to_float(ab.alpha),
-        q15_fixed_to_float(ab.beta));
+    qfixed_to_float(&alpha_f, ab.alpha, wf);
+    qfixed_to_float(&beta_f, ab.beta, wf);
+    printf("clarke -> alpha: %.4f \t beta: %.4f\n", alpha_f, beta_f);
 
     park_direct_2p_q15(&qd, ab, 30);
-    printf("park -> q: %.4f \t d: %.4f\n",
-        q15_fixed_to_float(qd.q),
-        q15_fixed_to_float(qd.d));
+    qfixed_to_float(&q_f, qd.q, wf);
+    qfixed_to_float(&d_f, qd.d, wf);
+    printf("park -> q: %.4f \t d: %.4f\n", q_f, d_f);
 
     park_inverse_2p_q15(&ab, qd, 30);
-    printf("park inverse -> alpha: %.4f \t beta: %.4f\n",
-        q15_fixed_to_float(ab.alpha),
-        q15_fixed_to_float(ab.beta));
+    qfixed_to_float(&alpha_f, ab.alpha, wf);
+    qfixed_to_float(&beta_f, ab.beta, wf);
+    printf("park inverse -> alpha: %.4f \t beta: %.4f\n", alpha_f, beta_f);
 
     clarke_inverse_2p_q15(&i, ab);
-    printf("clarke inverse -> A: %.4f \t B: %.4f \t C: %.4f \n",
-            q15_fixed_to_float(i.ia),
-            q15_fixed_to_float(i.ib),
-            q15_fixed_to_float(i.ic));
+    qfixed_to_float(&ia_f, i.ia, wf);
+    qfixed_to_float(&ib_f, i.ib, wf);
+    qfixed_to_float(&ic_f, i.ic, wf);
+    printf("clarke inverse -> A: %.4f \t B: %.4f \t C: %.4f \n", ia_f, ib_f, ic_f);
 
     puts("========================float========================");
     alpha_beta ab_float;
