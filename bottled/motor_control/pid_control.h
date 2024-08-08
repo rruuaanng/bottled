@@ -6,31 +6,31 @@ extern "C" {
 #endif
 
 #include <motor_control/common.h>
-
+#include <stdio.h>
 //
 // PID control
 //
 static inline
-void pid_control(
+void pid_control_q15(
     int32_t *err_sum, int32_t *prev_err, 
     int32_t *out,
-    int32_t kp, int32_t ki, int32_t kd,
+    float kp, float ki, float kd,
     int32_t measured_val, int32_t target)
 {
     int32_t err;
-    err = target - measured_val;
-
     int32_t diff;
-    diff = err - (*prev_err);
-    
     int32_t p, i, d;
-    p = kp * err;
-    i = ki * (*err_sum);
-    d = kd * diff;
+    
+    err = target - measured_val;
+    diff = err - (*prev_err); 
 
+    p = q15(kp) * err;
+    i = q15(ki) * (*err_sum);
+    d = q15(kd) * diff; 
+    
     *prev_err = err;
     *err_sum += err;
-    *out = (p + i + d);
+    *out = q15_fixed_add(q15_fixed_add(p, i), d);
 }
 
 #ifdef __cplusplus
