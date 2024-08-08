@@ -12,7 +12,7 @@ extern "C" {
 #include <stdbool.h>
 
 //
-// q_fixed math constant
+// qfixed math constant
 //
 #define Q15_FIXED_SQRT3                 0xDDB4
 
@@ -66,85 +66,85 @@ int32_t sin_cos_lut[SIN_COS_TABLE_SIZE + 1] = SIN_COS_TABLE;
 #define max(x, y)                       ((x) > (y) ? (x): (y))
 #define min(x, y)                       ((x) < (y) ? (x): (y))
 #define diff(x, y)                      (max(x, y) - min(x, y))
-#define __q_fixed_is_neg(n)             ((n) & __get_symbol_bit()? 1: 0)
-#define __to_q_fixed(n, wf)             (int32_t)((n) * (1 << (wf)))
+#define __qfixed_is_neg(n)             ((n) & __get_symbol_bit()? 1: 0)
+#define __to_qfixed(n, wf)             (int32_t)((n) * (1 << (wf)))
 #define __get_symbol_bit()              (1 << ((sizeof(int32_t) * 8) - 1))
 
 //
-// q_fixed structure
+// qfixed structure
 //
 #define Q_FIXED_SIZE                    0x20
 #define Q_FIXED_WF_15                   0x0F                // Q15
 #define Q_FIXED_WF_14                   0x0E                // Q14
 #define Q_FIXED_WF_12                   0x0C                // Q12
 #define Q_FIXED_WF_7                    0x07                // Q7
-typedef int32_t                         q_fixed;
+typedef int32_t                         qfixed;
 
-#define q_fixed_var(name, fixed) \
-    q_fixed name = fixed
-#define q_fixed_fvar(name, n_float, wf) \
-    q_fixed name = __to_q_fixed(n_float, wf)
+#define qfixed_var(name, fixed) \
+    qfixed name = fixed
+#define qfixed_fvar(name, n_float, wf) \
+    qfixed name = __to_qfixed(n_float, wf)
 
-#define qxx(n_float, wf)                __to_q_fixed(n_float, wf)
-#define q15(n_float)                    __to_q_fixed(n_float, Q_FIXED_WF_15)
-#define q14(n_float)                    __to_q_fixed(n_float, Q_FIXED_WF_14)
-#define q12(n_float)                    __to_q_fixed(n_float, Q_FIXED_WF_12)
-#define q7(n_float)                     __to_q_fixed(n_float, Q_FIXED_WF_7)
+#define qxx(n_float, wf)                __to_qfixed(n_float, wf)
+#define q15(n_float)                    __to_qfixed(n_float, Q_FIXED_WF_15)
+#define q14(n_float)                    __to_qfixed(n_float, Q_FIXED_WF_14)
+#define q12(n_float)                    __to_qfixed(n_float, Q_FIXED_WF_12)
+#define q7(n_float)                     __to_qfixed(n_float, Q_FIXED_WF_7)
 
 //
-// q_fixed multiplying and dividing multiples of two
+// qfixed multiplying and dividing multiples of two
 //
-#define q_fixed_mul2(fixed)             ((fixed) << (1))
-#define q_fixed_mul4(fixed)             ((fixed) << (2))
-#define q_fixed_mul8(fixed)             ((fixed) << (3))
-#define q_fixed_mul16(fixed)            ((fixed) << (4))
-#define q_fixed_mul32(fixed)            ((fixed) << (5))
-#define q_fixed_mul64(fixed)            ((fixed) << (6))
+#define qfixed_mul2(fixed)             ((fixed) << (1))
+#define qfixed_mul4(fixed)             ((fixed) << (2))
+#define qfixed_mul8(fixed)             ((fixed) << (3))
+#define qfixed_mul16(fixed)            ((fixed) << (4))
+#define qfixed_mul32(fixed)            ((fixed) << (5))
+#define qfixed_mul64(fixed)            ((fixed) << (6))
 
-#define q_fixed_div2(fixed)             ((fixed) >> (1))
-#define q_fixed_div4(fixed)             ((fixed) >> (2))
-#define q_fixed_div8(fixed)             ((fixed) >> (3))
-#define q_fixed_div16(fixed)            ((fixed) >> (4))
-#define q_fixed_div32(fixed)            ((fixed) >> (5))
-#define q_fixed_div64(fixed)            ((fixed) >> (6))
+#define qfixed_div2(fixed)             ((fixed) >> (1))
+#define qfixed_div4(fixed)             ((fixed) >> (2))
+#define qfixed_div8(fixed)             ((fixed) >> (3))
+#define qfixed_div16(fixed)            ((fixed) >> (4))
+#define qfixed_div32(fixed)            ((fixed) >> (5))
+#define qfixed_div64(fixed)            ((fixed) >> (6))
 
 
 //
 // float-point number convert to fixed-point number
 //
 // argument:
-//  fixed    q_fixed object ptr
+//  fixed    qfixed object ptr
 //  n        float-point number
 //  wf       bit width
 static inline
-void float_to_q_fixed(
-    q_fixed *fixed,
+void float_to_qfixed(
+    qfixed *fixed,
     float n, int wf)
 {
     if (wf > Q_FIXED_SIZE)
         wf = Q_FIXED_SIZE;
 
-    *fixed = __to_q_fixed(n, wf);
+    *fixed = __to_qfixed(n, wf);
 }
 #define float_to_q15_fixed(n_float) ({ \
-    q_fixed __q_fixed_val; \
-    float_to_q_fixed(&__q_fixed_val, n_float, Q_FIXED_WF_15); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    float_to_qfixed(&__qfixed_val, n_float, Q_FIXED_WF_15); \
+    __qfixed_val; \
 })
 #define float_to_q14_fixed(n_float) ({ \
-    q_fixed __q_fixed_val; \
-    float_to_q_fixed(&__q_fixed_val, n_float, Q_FIXED_WF_14); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    float_to_qfixed(&__qfixed_val, n_float, Q_FIXED_WF_14); \
+    __qfixed_val; \
 })
 #define float_to_q12_fixed(n_float) ({ \
-    q_fixed __q_fixed_val; \
-    float_to_q_fixed(&__q_fixed_val, n_float, Q_FIXED_WF_12); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    float_to_qfixed(&__qfixed_val, n_float, Q_FIXED_WF_12); \
+    __qfixed_val; \
 })
 #define float_to_q7_fixed(n_float) ({ \
-    q_fixed __q_fixed_val; \
-    float_to_q_fixed(&__q_fixed_val, n_float, Q_FIXED_WF_7); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    float_to_qfixed(&__qfixed_val, n_float, Q_FIXED_WF_7); \
+    __qfixed_val; \
 })
 
 //
@@ -152,10 +152,10 @@ void float_to_q_fixed(
 //
 // argument:
 //  n        float-point number ptr
-//  fixed    q_fixed object
+//  fixed    qfixed object
 //  wf       bit width
 static inline
-int q_fixed_to_float(float *n, q_fixed fixed, int wf)
+int qfixed_to_float(float *n, qfixed fixed, int wf)
 {
     uint16_t offset;
     uint32_t tmp;
@@ -189,22 +189,22 @@ int q_fixed_to_float(float *n, q_fixed fixed, int wf)
 }
 #define q15_fixed_to_float(fixed) ({ \
     float __float_val; \
-    q_fixed_to_float(&__float_val, fixed, Q_FIXED_WF_15); \
+    qfixed_to_float(&__float_val, fixed, Q_FIXED_WF_15); \
     __float_val; \
 })
 #define q14_fixed_to_float(fixed) ({ \
     float __float_val; \
-    q_fixed_to_float(&__float_val, fixed, Q_FIXED_WF_14); \
+    qfixed_to_float(&__float_val, fixed, Q_FIXED_WF_14); \
     __float_val; \
 })
 #define q12_fixed_to_float(fixed) ({ \
     float __float_val; \
-    q_fixed_to_float(&__float_val, fixed, Q_FIXED_WF_12); \
+    qfixed_to_float(&__float_val, fixed, Q_FIXED_WF_12); \
     __float_val; \
 })
 #define q7_fixed_to_float(fixed) ({ \
     float __float_val; \
-    q_fixed_to_float(&__float_val, fixed, Q_FIXED_WF_7); \
+    qfixed_to_float(&__float_val, fixed, Q_FIXED_WF_7); \
     __float_val; \
 })
 
@@ -212,15 +212,15 @@ int q_fixed_to_float(float *n, q_fixed fixed, int wf)
 // fixed-point number addition
 //
 // argument:
-//  y        q_fixed object ptr
+//  y        qfixed object ptr
 //  x1       operand number1
 //  x2       operand number2
 //  x1_wf    x1 bit width
 //  x2_wf    x2 bit width
 static inline
-void q_fixed_add(
-    q_fixed *y, 
-    q_fixed x1, q_fixed x2,
+void qfixed_add(
+    qfixed *y, 
+    qfixed x1, qfixed x2,
     int x1_wf, int x2_wf)
 {
     int32_t n1, n2;
@@ -240,24 +240,24 @@ void q_fixed_add(
     *y = n1 + n2;
 }
 #define q15_fixed_add(x1, x2) ({ \
-    q_fixed __q_fixed_val; \
-    q_fixed_add(&__q_fixed_val, x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    qfixed_add(&__qfixed_val, x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15); \
+    __qfixed_val; \
 })
 #define q14_fixed_add(x1, x2) ({ \
-    q_fixed __q_fixed_val; \
-    q_fixed_add(&__q_fixed_val, x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    qfixed_add(&__qfixed_val, x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14); \
+    __qfixed_val; \
 })
 #define q12_fixed_add(x1, x2) ({ \
-    q_fixed __q_fixed_val; \
-    q_fixed_add(&__q_fixed_val, x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    qfixed_add(&__qfixed_val, x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12); \
+    __qfixed_val; \
 })
 #define q7_fixed_add(x1, x2) ({ \
-    q_fixed __q_fixed_val; \
-    q_fixed_add(&__q_fixed_val, x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    qfixed_add(&__qfixed_val, x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7); \
+    __qfixed_val; \
 })
     
 
@@ -266,15 +266,15 @@ void q_fixed_add(
 // fixed-point number subtraction
 //
 // argument:
-//  y        q_fixed object ptr
+//  y        qfixed object ptr
 //  x1       operand number1
 //  x2       operand number2
 //  x1_wf    x1 bit width
 //  x2_wf    x2 bit width
 static inline
-void q_fixed_sub(
-    q_fixed *y, 
-    q_fixed x1, q_fixed x2,
+void qfixed_sub(
+    qfixed *y, 
+    qfixed x1, qfixed x2,
     int x1_wf, int x2_wf)
 {
     int32_t n1, n2;
@@ -294,39 +294,39 @@ void q_fixed_sub(
     *y = n1 - n2;
 }
 #define q15_fixed_sub(x1, x2) ({ \
-    q_fixed __q_fixed_val; \
-    q_fixed_sub(&__q_fixed_val, x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    qfixed_sub(&__qfixed_val, x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15); \
+    __qfixed_val; \
 })
 #define q14_fixed_sub(x1, x2) ({ \
-    q_fixed __q_fixed_val; \
-    q_fixed_sub(&__q_fixed_val, x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    qfixed_sub(&__qfixed_val, x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14); \
+    __qfixed_val; \
 })
 #define q12_fixed_sub(x1, x2) ({ \
-    q_fixed __q_fixed_val; \
-    q_fixed_sub(&__q_fixed_val, x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    qfixed_sub(&__qfixed_val, x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12); \
+    __qfixed_val; \
 })
 #define q7_fixed_sub(x1, x2) ({ \
-    q_fixed __q_fixed_val; \
-    q_fixed_sub(&__q_fixed_val, x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    qfixed_sub(&__qfixed_val, x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7); \
+    __qfixed_val; \
 })
     
 
 // fixed-point number multiplication
 //
 // argument:
-//  y            q_fixed object ptr
+//  y            qfixed object ptr
 //  x1           operand number1
 //  x2           operand number2
 //  x1_wf    x1 bit width
 //  x2_wf    x2 bit width
 static inline
-void q_fixed_mul(
-    q_fixed *y,
-    q_fixed x1, q_fixed x2, int wf)
+void qfixed_mul(
+    qfixed *y,
+    qfixed x1, qfixed x2, int wf)
 {
     int32_t x1_low, x2_low;
     int32_t x1_high, x2_high;
@@ -346,24 +346,24 @@ void q_fixed_mul(
     *y = (int_fast32_t)tmp;
 }
 #define q15_fixed_mul(x1, x2) ({ \
-    q_fixed __q_fixed_val; \
-    q_fixed_mul(&__q_fixed_val, x1, x2, Q_FIXED_WF_15); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    qfixed_mul(&__qfixed_val, x1, x2, Q_FIXED_WF_15); \
+    __qfixed_val; \
 })
 #define q14_fixed_mul(x1, x2) ({ \
-    q_fixed __q_fixed_val; \
-    q_fixed_mul(&__q_fixed_val, x1, x2, Q_FIXED_WF_14); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    qfixed_mul(&__qfixed_val, x1, x2, Q_FIXED_WF_14); \
+    __qfixed_val; \
 })
 #define q12_fixed_mul(x1, x2) ({ \
-    q_fixed __q_fixed_val; \
-    q_fixed_mul(&__q_fixed_val, x1, x2, Q_FIXED_WF_12); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    qfixed_mul(&__qfixed_val, x1, x2, Q_FIXED_WF_12); \
+    __qfixed_val; \
 })
 #define q7_fixed_mul(x1, x2) ({ \
-    q_fixed __q_fixed_val; \
-    q_fixed_mul(&__q_fixed_val, x1, x2, Q_FIXED_WF_7); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    qfixed_mul(&__qfixed_val, x1, x2, Q_FIXED_WF_7); \
+    __qfixed_val; \
 })
 
 //
@@ -376,9 +376,9 @@ void q_fixed_mul(
 // note:
 //  copy for IQmath (it's so hard)
 static inline
-void q_fixed_div(
-    q_fixed *y,
-    q_fixed x1, q_fixed x2, int wf)
+void qfixed_div(
+    qfixed *y,
+    qfixed x1, qfixed x2, int wf)
 {
 #define ____right(x1, x2)              (uint_fast32_t)(((uint_fast64_t)x1 * (uint_fast64_t)x2) >> 31)
 #define ____sub_tmp(tmp)               (-((uint_fast32_t)tmp - 0x80000000))
@@ -491,24 +491,24 @@ error:
     *y = 0;
 }
 #define q15_fixed_div(x1, x2) ({ \
-    q_fixed __q_fixed_val; \
-    q_fixed_div(&__q_fixed_val, x1, x2, Q_FIXED_WF_15); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    qfixed_div(&__qfixed_val, x1, x2, Q_FIXED_WF_15); \
+    __qfixed_val; \
 })
 #define q14_fixed_div(x1, x2) ({ \
-    q_fixed __q_fixed_val; \
-    q_fixed_div(&__q_fixed_val, x1, x2, Q_FIXED_WF_14); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    qfixed_div(&__qfixed_val, x1, x2, Q_FIXED_WF_14); \
+    __qfixed_val; \
 })
 #define q12_fixed_div(x1, x2) ({ \
-    q_fixed __q_fixed_val; \
-    q_fixed_div(&__q_fixed_val, x1, x2, Q_FIXED_WF_12); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    qfixed_div(&__qfixed_val, x1, x2, Q_FIXED_WF_12); \
+    __qfixed_val; \
 })
 #define q7_fixed_div(x1, x2) ({ \
-    q_fixed __q_fixed_val; \
-    q_fixed_div(&__q_fixed_val, x1, x2, Q_FIXED_WF_7); \
-    __q_fixed_val; \
+    qfixed __qfixed_val; \
+    qfixed_div(&__qfixed_val, x1, x2, Q_FIXED_WF_7); \
+    __qfixed_val; \
 })
 
 //
@@ -520,27 +520,27 @@ error:
 //  x1_wf    x1 bit width
 //  x2_wf    x2 bit width
 static inline
-bool q_fixed_gt(
-    q_fixed x1, q_fixed x2,
+bool qfixed_gt(
+    qfixed x1, qfixed x2,
     int x1_wf, int x2_wf)
 {
-    q_fixed y;
+    qfixed y;
 
     // i'm too smart
-    q_fixed_sub(&y, x1, x2, x1_wf, x2_wf);
+    qfixed_sub(&y, x1, x2, x1_wf, x2_wf);
     
     if (y > 0)
         return true;
     return false;
 }
 #define q15_fixed_gt(x1, x2) \
-    q_fixed_gt(x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15)
+    qfixed_gt(x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15)
 #define q14_fixed_gt(x1, x2) \
-    q_fixed_gt(x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14)
+    qfixed_gt(x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14)
 #define q12_fixed_gt(x1, x2) \
-    q_fixed_gt(x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12)
+    qfixed_gt(x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12)
 #define q7_fixed_gt(x1, x2) \
-    q_fixed_gt(x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7)
+    qfixed_gt(x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7)
 
 //
 // fixed-point number greater than comparison with equal
@@ -551,27 +551,27 @@ bool q_fixed_gt(
 //  x1_wf    x1 bit width
 //  x2_wf    x2 bit width
 static inline
-bool q_fixed_gte(
-    q_fixed x1, q_fixed x2,
+bool qfixed_gte(
+    qfixed x1, qfixed x2,
     int x1_wf, int x2_wf)
 {
-    q_fixed y;
+    qfixed y;
 
     // i'm too smart
-    q_fixed_sub(&y, x1, x2, x1_wf, x2_wf);
+    qfixed_sub(&y, x1, x2, x1_wf, x2_wf);
 
     if (y >= 0)
         return true;
     return false;
 }
 #define q15_fixed_gte(x1, x2) \
-    q_fixed_gte(x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15)
+    qfixed_gte(x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15)
 #define q14_fixed_gte(x1, x2) \
-    q_fixed_gte(x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14)
+    qfixed_gte(x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14)
 #define q12_fixed_gte(x1, x2) \
-    q_fixed_gte(x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12)
+    qfixed_gte(x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12)
 #define q7_fixed_gte(x1, x2) \
-    q_fixed_gte(x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7)
+    qfixed_gte(x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7)
 
 //
 // fixed-point number less than comparison
@@ -582,26 +582,26 @@ bool q_fixed_gte(
 //  x1_wf    x1 bit width
 //  x2_wf    x2 bit width
 static inline
-bool q_fixed_lt(
-    q_fixed x1, q_fixed x2,
+bool qfixed_lt(
+    qfixed x1, qfixed x2,
     int x1_wf, int x2_wf)
 {
-    q_fixed y;
+    qfixed y;
 
-    q_fixed_sub(&y, x1, x2, x1_wf, x2_wf);
+    qfixed_sub(&y, x1, x2, x1_wf, x2_wf);
 
     if (y < 0)
         return true;
     return false;
 }
 #define q15_fixed_lt(x1, x2) \
-    q_fixed_lt(x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15)
+    qfixed_lt(x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15)
 #define q14_fixed_lt(x1, x2) \
-    q_fixed_lt(x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14)
+    qfixed_lt(x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14)
 #define q12_fixed_lt(x1, x2) \
-    q_fixed_lt(x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12)
+    qfixed_lt(x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12)
 #define q7_fixed_lt(x1, x2) \
-    q_fixed_lt(x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7)
+    qfixed_lt(x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7)
 
 //
 // fixed-point number less than comparison with equal
@@ -612,26 +612,26 @@ bool q_fixed_lt(
 //  x1_wf    x1 bit width
 //  x2_wf    x2 bit width
 static inline
-bool q_fixed_lte(
-    q_fixed x1, q_fixed x2,
+bool qfixed_lte(
+    qfixed x1, qfixed x2,
     int x1_wf, int x2_wf)
 {
-    q_fixed y;
+    qfixed y;
 
-    q_fixed_sub(&y, x1, x2, x1_wf, x2_wf);
+    qfixed_sub(&y, x1, x2, x1_wf, x2_wf);
 
     if (y <= 0)
         return true;
     return false;
 }
 #define q15_fixed_lte(x1, x2) \
-    q_fixed_lte(x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15)
+    qfixed_lte(x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15)
 #define q14_fixed_lte(x1, x2) \
-    q_fixed_lte(x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14)
+    qfixed_lte(x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14)
 #define q12_fixed_lte(x1, x2) \
-    q_fixed_lte(x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12)
+    qfixed_lte(x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12)
 #define q7_fixed_lte(x1, x2) \
-    q_fixed_lte(x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7)
+    qfixed_lte(x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7)
 
 //
 // fixed-point number equal comparison
@@ -642,26 +642,26 @@ bool q_fixed_lte(
 //  x1_wf    x1 bit width
 //  x2_wf    x2 bit width
 static inline
-bool q_fixed_eq(
-    q_fixed x1, q_fixed x2,
+bool qfixed_eq(
+    qfixed x1, qfixed x2,
     int x1_wf, int x2_wf)
 {
-    q_fixed y;
+    qfixed y;
 
-    q_fixed_sub(&y, x1, x2, x1_wf, x2_wf);
+    qfixed_sub(&y, x1, x2, x1_wf, x2_wf);
 
     if (y == 0)
         return true;
     return false;
 }
 #define q15_fixed_eq(x1, x2) \
-    q_fixed_eq(x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15)
+    qfixed_eq(x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15)
 #define q14_fixed_eq(x1, x2) \
-    q_fixed_eq(x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14)
+    qfixed_eq(x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14)
 #define q12_fixed_eq(x1, x2) \
-    q_fixed_eq(x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12)
+    qfixed_eq(x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12)
 #define q7_fixed_eq(x1, x2) \
-    q_fixed_eq(x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7)
+    qfixed_eq(x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7)
 
 //
 // fixed-point number not equal comparison
@@ -672,26 +672,26 @@ bool q_fixed_eq(
 //  x1_wf    x1 bit width
 //  x2_wf    x2 bit width
 static inline
-bool q_fixed_ne(
-    q_fixed x1, q_fixed x2,
+bool qfixed_ne(
+    qfixed x1, qfixed x2,
     int x1_wf, int x2_wf)
 {
-    q_fixed y;
+    qfixed y;
 
-    q_fixed_sub(&y, x1, x2, x1_wf, x2_wf);
+    qfixed_sub(&y, x1, x2, x1_wf, x2_wf);
 
     if (y != 0)
         return true;
     return false;
 }
 #define q15_fixed_ne(x1, x2) \
-    q_fixed_ne(x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15)
+    qfixed_ne(x1, x2, Q_FIXED_WF_15, Q_FIXED_WF_15)
 #define q14_fixed_ne(x1, x2) \
-    q_fixed_ne(x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14)
+    qfixed_ne(x1, x2, Q_FIXED_WF_14, Q_FIXED_WF_14)
 #define q12_fixed_ne(x1, x2) \
-    q_fixed_ne(x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12)
+    qfixed_ne(x1, x2, Q_FIXED_WF_12, Q_FIXED_WF_12)
 #define q7_fixed_ne(x1, x2) \
-    q_fixed_ne(x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7)
+    qfixed_ne(x1, x2, Q_FIXED_WF_7, Q_FIXED_WF_7)
 
 //
 // symbolic function
@@ -699,9 +699,9 @@ bool q_fixed_ne(
 // argument:
 //  x1       operand number1
 static inline
-int q_fixed_math_sign(q_fixed x1)
+int qfixed_math_sign(qfixed x1)
 {
-    if (__q_fixed_is_neg(x1)) {
+    if (__qfixed_is_neg(x1)) {
         return -1;
     } else if (x1 != 0){
         return 1;
@@ -716,9 +716,9 @@ int q_fixed_math_sign(q_fixed x1)
 // argument:
 //  x1       operand number1
 static inline
-q_fixed q_fixed_math_abs(q_fixed x1)
+qfixed qfixed_math_abs(qfixed x1)
 {
-    if (__q_fixed_is_neg(x1)) {
+    if (__qfixed_is_neg(x1)) {
         return x1 * -1;
     } else {
         return x1;
@@ -733,8 +733,8 @@ q_fixed q_fixed_math_abs(q_fixed x1)
 //  cos      cos function value
 //  angle    measure angle
 static inline
-void q_fixed_math_sin_cos_q15(
-    q_fixed *sin, q_fixed *cos,
+void qfixed_math_sin_cos_q15(
+    qfixed *sin, qfixed *cos,
     int angle)
 {
 #define QUAD_0_90        0U

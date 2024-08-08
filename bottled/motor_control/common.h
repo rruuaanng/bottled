@@ -9,7 +9,7 @@ extern "C" {
 // import standard library
 //
 #include <common/types.h>
-#include <common/q_fixed.h>
+#include <common/qfixed.h>
 
 //
 // physical structure

@@ -24,8 +24,8 @@ extern "C" {
 static inline
 void clarke_direct_3p_q15(alpha_beta *ab, phase_i i)
 {
-    q_fixed x0, x1;
-    const q_fixed sqrt3 = Q15_FIXED_SQRT3; // q15
+    qfixed x0, x1;
+    const qfixed sqrt3 = Q15_FIXED_SQRT3; // q15
     
     ab->alpha = i.ia;
     x0 = q15_fixed_mul(sqrt3, i.ia) / 3;
@@ -39,7 +39,7 @@ void clarke_direct_3p_q15(alpha_beta *ab, phase_i i)
 static inline
 void clarke_inverse_2p_q15(phase_i *i, alpha_beta ab)
 {
-    const q_fixed sqrt3 = Q15_FIXED_SQRT3; // q15
+    const qfixed sqrt3 = Q15_FIXED_SQRT3; // q15
 
     i->ia = ab.alpha;
     i->ib = q15_fixed_add(0 - ab.alpha, q15_fixed_mul(sqrt3, ab.beta)) / 2;

@@ -9,8 +9,8 @@ int main(int argc, char const *argv[])
     q_d qd;
 
     int wf = 15;
-    q_fixed_fvar(x1, 25.15, wf);
-    q_fixed_fvar(x2, 24.1851, wf);
+    qfixed_fvar(x1, 25.15, wf);
+    qfixed_fvar(x2, 24.1851, wf);
     phase_i_var(i, x1, x2, 0);
 
     printf("A: %.4f \t B: %.4f \t C: %.4f\n",

@@ -13,10 +13,10 @@ extern "C" {
 static inline
 void park_direct_2p_q15(q_d *qd, alpha_beta ab, int theta_deg)
 {
-    q_fixed x0, x1;
-    q_fixed sin_theta, cos_theta;
+    qfixed x0, x1;
+    qfixed sin_theta, cos_theta;
 
-    q_fixed_math_sin_cos_q15(&sin_theta, &cos_theta, theta_deg);
+    qfixed_math_sin_cos_q15(&sin_theta, &cos_theta, theta_deg);
 
     x0 = q15_fixed_mul(ab.alpha, cos_theta);
     x1 = q15_fixed_mul(ab.beta, sin_theta);
@@ -33,10 +33,10 @@ void park_direct_2p_q15(q_d *qd, alpha_beta ab, int theta_deg)
 static inline
 void park_inverse_2p_q15(alpha_beta *ab, q_d qd, int theta_deg)
 {
-    q_fixed x0, x1;
-    q_fixed sin_theta, cos_theta;
+    qfixed x0, x1;
+    qfixed sin_theta, cos_theta;
 
-    q_fixed_math_sin_cos_q15(&sin_theta, &cos_theta, theta_deg);
+    qfixed_math_sin_cos_q15(&sin_theta, &cos_theta, theta_deg);
     x0 = q15_fixed_mul(qd.d, cos_theta);
     x1 = q15_fixed_mul(qd.q, sin_theta);
     ab->alpha = q15_fixed_sub(x0, x1);
