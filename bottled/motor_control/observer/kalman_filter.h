@@ -11,23 +11,26 @@ extern "C" {
 // kalman filter
 //
 static inline
-void kalman_filter(
+void kalman_filter_q15(
     int32_t *out,
-    int32_t *x_last, int32_t *p_last,
-    int32_t measured_val, int32_t q, int32_t r)
+    int32_t *x_last_q15, int32_t *p_last_q15,
+    int32_t measured_val, float q, float r)
 {
     int32_t x_mid, x_now;
     int32_t p_mid, p_now;
     int32_t kg;
 
-    x_mid = *x_last;
-    p_mid = *p_last + q;
-    kg = p_mid / (p_mid + r);
-    x_now = x_mid + kg * (measured_val - x_mid);
-    p_now = (1 - kg) * p_mid;
+    x_mid = *x_last_q15;
+    p_mid = *p_last_q15 + q15(q);
 
-    *p_last = p_now;
-    *x_last = x_now;
+    kg = q15_fixed_div(p_mid, q15_fixed_add(p_mid, q15(r)));
+    x_now = q15_fixed_mul(
+        q15_fixed_add(x_mid, kg),
+        q15_fixed_sub(q15(measured_val), x_mid));
+    p_now = q15_fixed_mul(q15_fixed_sub(q15(1), kg), p_mid);
+
+    *p_last_q15 = p_now;
+    *x_last_q15 = x_now;
     *out = x_now;
 }
 
