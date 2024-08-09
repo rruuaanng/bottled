@@ -29,7 +29,7 @@ my-project
 
 ```C
 #include <stdio.h>
-#include <common/qfixed.h>
+#include <common/q_fixed.h>
 
 
 int main(int argc, char const *argv[])
