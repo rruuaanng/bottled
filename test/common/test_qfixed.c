@@ -1,4 +1,4 @@
-#include <common/q_fixed.h>
+#include <common/qfixed.h>
 #include <stdio.h>
 
 
@@ -7,9 +7,9 @@ int main(int argc, char const *argv[])
     // 
     // Q15 test
     //
-    q_fixed x1, x2;
+    qfixed x1, x2;
     float x1_f, x2_f;
-    q_fixed sin, cos;
+    qfixed sin, cos;
     x1_f = 1.537;
     x2_f = 0.4;
 
@@ -156,23 +156,23 @@ int main(int argc, char const *argv[])
 
     // math
     puts("====================math======================");\
-    printf("abs (q15_fixed): %d %d\n", q_fixed_math_abs(q15(-1.4612)), q15(-1.4612));
-    printf("abs (q14_fixed): %d %d\n", q_fixed_math_abs(q14(-1.4612)), q14(-1.4612));
-    printf("abs (q12_fixed): %d %d\n", q_fixed_math_abs(q12(-1.4612)), q12(-1.4612));
-    printf("abs (q7_fixed): %d %d\n", q_fixed_math_abs(q7(-1.4612)), q7(-1.4612));
+    printf("abs (q15_fixed): %d %d\n", qfixed_math_abs(q15(-1.4612)), q15(-1.4612));
+    printf("abs (q14_fixed): %d %d\n", qfixed_math_abs(q14(-1.4612)), q14(-1.4612));
+    printf("abs (q12_fixed): %d %d\n", qfixed_math_abs(q12(-1.4612)), q12(-1.4612));
+    printf("abs (q7_fixed): %d %d\n", qfixed_math_abs(q7(-1.4612)), q7(-1.4612));
 
-    printf("sign (q15_fixed): %d %d\n", q_fixed_math_sign(q15(1.4612)), q15(1.4612));
-    printf("sign (q14_fixed): %d %d\n", q_fixed_math_sign(q14(1.4612)), q14(1.4612));
-    printf("sign (q12_fixed): %d %d\n", q_fixed_math_sign(q12(1.4612)), q12(1.4612));
-    printf("sign (q7_fixed): %d %d\n", q_fixed_math_sign(q7(-1.4612)), q7(-1.4612));
+    printf("sign (q15_fixed): %d %d\n", qfixed_math_sign(q15(1.4612)), q15(1.4612));
+    printf("sign (q14_fixed): %d %d\n", qfixed_math_sign(q14(1.4612)), q14(1.4612));
+    printf("sign (q12_fixed): %d %d\n", qfixed_math_sign(q12(1.4612)), q12(1.4612));
+    printf("sign (q7_fixed): %d %d\n", qfixed_math_sign(q7(-1.4612)), q7(-1.4612));
 
-    q_fixed_math_sin_cos_q15(&sin, &cos, 30);
+    qfixed_math_sin_cos_q15(&sin, &cos, 30);
     printf("sin (30): %.4f cos (30): %.4f\n", 
             q15_fixed_to_float(sin), q15_fixed_to_float(cos));
-    q_fixed_math_sin_cos_q15(&sin, &cos, 45);
+    qfixed_math_sin_cos_q15(&sin, &cos, 45);
     printf("sin (45): %.4f cos (45): %.4f\n", 
             q15_fixed_to_float(sin), q15_fixed_to_float(cos));
-    q_fixed_math_sin_cos_q15(&sin, &cos, 60);
+    qfixed_math_sin_cos_q15(&sin, &cos, 60);
     printf("sin (60): %.4f cos (60): %.4f\n", 
             q15_fixed_to_float(sin), q15_fixed_to_float(cos));
 
