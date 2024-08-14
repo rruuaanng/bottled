@@ -785,6 +785,15 @@ void qfixed_math_sin_cos_q15(
     }
 }
 
+//
+// square root function
+//
+// argument:
+//  y       qfixed object ptr
+//  x1      operand number
+static inline
+void qfixed_math_sqrt(qfixed *y, qfixed x1);
+
 #ifdef __cplusplus
 }
 #endif 
