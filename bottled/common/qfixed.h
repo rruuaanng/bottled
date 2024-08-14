@@ -812,6 +812,15 @@ void qfixed_math_power(qfixed *y, qfixed x1);
 static inline
 void qfixed_math_log(qfixed *y, qfixed x1);
 
+//
+// exponential function
+// 
+// argument:
+//  y       qfixed object ptr
+//  x1      operand number1
+static inline
+void qfixed_math_exp(qfixed *y, qfixed x1);
+
 #ifdef __cplusplus
 }
 #endif 
