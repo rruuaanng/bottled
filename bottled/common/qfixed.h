@@ -370,7 +370,7 @@ void qfixed_mul(
 // fixed-point number division
 //
 // argument:
-//  y            result
+//  y            qfixed object ptr
 //  x1           operand number1
 //  x2           operand number2
 // note:
@@ -519,6 +519,8 @@ error:
 //  x2           operand number2
 //  x1_wf    x1 bit width
 //  x2_wf    x2 bit width
+// return:
+//  is x1 greater then x2
 static inline
 bool qfixed_gt(
     qfixed x1, qfixed x2,
@@ -550,6 +552,8 @@ bool qfixed_gt(
 //  x2           operand number2
 //  x1_wf    x1 bit width
 //  x2_wf    x2 bit width
+// return:
+//  is x1 greater than or equal to x2
 static inline
 bool qfixed_gte(
     qfixed x1, qfixed x2,
@@ -581,6 +585,8 @@ bool qfixed_gte(
 //  x2           operand number2
 //  x1_wf    x1 bit width
 //  x2_wf    x2 bit width
+// return:
+//  is x1 less then x2
 static inline
 bool qfixed_lt(
     qfixed x1, qfixed x2,
@@ -611,6 +617,8 @@ bool qfixed_lt(
 //  x2           operand number2
 //  x1_wf    x1 bit width
 //  x2_wf    x2 bit width
+// return:
+//  is x1 less than or equal to x2
 static inline
 bool qfixed_lte(
     qfixed x1, qfixed x2,
@@ -641,6 +649,8 @@ bool qfixed_lte(
 //  x2           operand number2
 //  x1_wf    x1 bit width
 //  x2_wf    x2 bit width
+// return:
+//  is x1 equal to x2
 static inline
 bool qfixed_eq(
     qfixed x1, qfixed x2,
@@ -671,6 +681,8 @@ bool qfixed_eq(
 //  x2       operand number2
 //  x1_wf    x1 bit width
 //  x2_wf    x2 bit width
+// return:
+//  is x1 not equal to x2
 static inline
 bool qfixed_ne(
     qfixed x1, qfixed x2,
@@ -698,6 +710,8 @@ bool qfixed_ne(
 //
 // argument:
 //  x1       operand number1
+// return:
+//  symbolic of x1
 static inline
 int qfixed_math_sign(qfixed x1)
 {
@@ -715,6 +729,8 @@ int qfixed_math_sign(qfixed x1)
 //
 // argument:
 //  x1       operand number1
+// return:
+//  absolute value of x1
 static inline
 qfixed qfixed_math_abs(qfixed x1)
 {
@@ -729,8 +745,8 @@ qfixed qfixed_math_abs(qfixed x1)
 // sin and cos function
 //
 // argument:
-//  sin      sin function value
-//  cos      cos function value
+//  sin      sin value ptr
+//  cos      cos value ptr
 //  angle    measure angle
 static inline
 void qfixed_math_sin_cos_q15(
