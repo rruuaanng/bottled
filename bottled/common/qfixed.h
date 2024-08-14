@@ -794,6 +794,15 @@ void qfixed_math_sin_cos_q15(
 static inline
 void qfixed_math_sqrt(qfixed *y, qfixed x1);
 
+//
+// power function
+//
+// argument:
+//  y       qfixed object ptr
+//  x1      operand number
+static inline
+void qfixed_math_power(qfixed *y, qfixed x1);
+
 #ifdef __cplusplus
 }
 #endif 
