@@ -32,17 +32,15 @@ void clarke_direct_3p_q15(alpha_beta *ab, phase_i i)
     x1 = q15_fixed_mul(2 * sqrt3, i.ib) / 3;
     ab->beta = x0 + x1;
 }
-static inline
-void clarke_direct_3p_float(alpha_beta *ab, phase_i i)
-{
-    float x0, x1;
-    const float sqrt3 = 1.73205f;
-    
-    ab->alpha_float = i.ia_float;
-    x0 = (sqrt3 * i.ia_float) / 3;
-    x1 = (2 * sqrt3 * i.ib_float) / 3;
-    ab->beta_float = x0 + x1;
-}
+#define clarke_direct_3p(alpha_ptr, beta_ptr, ia, ib)       \
+do {                                                        \
+    float __x0, __x1;                                       \
+    const float __sqrt3 = 1.73205f;                         \
+    *alpha_ptr = ia;                                        \
+    __x0 = (__sqrt3 * ia) / 3;                              \
+    __x1 = (2 * __sqrt3 * ib) / 3;                          \
+    *beta_ptr = __x0 + __x1;                                \
+} while(0)
 
 //
 // clarke inverse transform
@@ -56,15 +54,13 @@ void clarke_inverse_2p_q15(phase_i *i, alpha_beta ab)
     i->ib = q15_fixed_add(0 - ab.alpha, q15_fixed_mul(sqrt3, ab.beta)) / 2;
     i->ic = q15_fixed_sub(0 - ab.alpha, q15_fixed_mul(sqrt3, ab.beta)) / 2;
 }
-static inline
-void clarke_inverse_2p_float(phase_i *i, alpha_beta ab)
-{
-    const float sqrt3 = 1.73205f;
-
-    i->ia_float = ab.alpha_float;
-    i->ib_float = (0 - ab.alpha_float + sqrt3 * ab.beta_float) / 2;
-    i->ic_float = (0 - ab.alpha_float - sqrt3 * ab.beta_float) / 2;
-}
+#define clarke_inverse_2p(ia_ptr, ib_ptr, ic_ptr, alpha, beta)       \
+do {                                                                 \
+    const float sqrt3 = 1.73205f;                                    \
+    *ia_ptr = alpha;                                                 \
+    *ib_ptr = (0 - alpha + sqrt3 * beta) / 2;                        \
+    *ic_ptr = (0 - alpha - sqrt3 * beta) / 2;                        \
+} while(0)
 
 #ifdef __cplusplus
 }

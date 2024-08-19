@@ -45,37 +45,24 @@ int main(int argc, char const *argv[])
     printf("clarke inverse -> A: %.4f \t B: %.4f \t C: %.4f \n", ia_f, ib_f, ic_f);
 
     puts("========================float========================");
-    alpha_beta ab_float;
-    q_d qd_float;
-    phase_i_fvar(i_float, 25.15, 24.1851, 0);
-    
-    printf("A: %.4f \t B: %.4f \t C: %.4f\n",
-                i_float.ia_float,
-                i_float.ib_float,
-                i_float.ic_float);
+    float alpha_float, beta_float;
+    float q_float, d_float;
+    float ia, ib, ic;
 
-    clarke_direct_3p_float(&ab_float, i_float);
+    ia = 25.15; ib = 24.1851; ic = 0;
+    printf("A: %.4f \t B: %.4f \t C: %.4f\n", ia, ib, ic);
 
-    printf("clarke -> alpha: %.4f \t beta: %.4f\n",
-        ab_float.alpha_float,
-        ab_float.beta_float);
+    clarke_direct_3p_float(&alpha_float, &beta_float, ia, ib);
+    printf("clarke -> alpha: %.4f \t beta: %.4f\n", alpha_float, beta_float);
 
-    park_direct_2p_float(&qd_float, ab_float, 30);
-    printf("park -> q: %.4f \t d: %.4f\n",
-        qd_float.q_float,
-        qd_float.d_float);
+    park_direct_2p_float(&q_float, &d_float, alpha_float, beta_float, 30);
+    printf("park -> q: %.4f \t d: %.4f\n", q_float, d_float);
 
-    park_inverse_2p_float(&ab_float, qd_float, 30);
-    printf("park inverse -> alpha: %.4f \t beta: %.4f\n",
-        ab_float.alpha_float,
-        ab_float.beta_float);
+    park_inverse_2p_float(&alpha_float, &beta_float, q_float, d_float, 30);
+    printf("park inverse -> alpha: %.4f \t beta: %.4f\n", alpha_float, beta_float);
 
-    clarke_inverse_2p_float(&i_float, ab_float);
-    printf("clarke inverse -> A: %.4f \t B: %.4f \t C: %.4f \n",
-            i_float.ia_float,
-            i_float.ib_float,
-            i_float.ic_float);
-
+    clarke_inverse_2p_float(&ia, &ib, &ic, alpha_float, beta_float);
+    printf("clarke inverse -> A: %.4f \t B: %.4f \t C: %.4f \n", ia, ib, ic);
 
     return 0;
 }

@@ -26,20 +26,17 @@ void park_direct_2p_q15(q_d *qd, alpha_beta ab, int theta_deg)
     x1 = q15_fixed_mul(ab.beta, cos_theta);
     qd->q = q15_fixed_add(x0, x1);
 }
-static inline
-void park_direct_2p_float(q_d *qd, alpha_beta ab, int theta_deg)
-{
-    const float pi180 = M_PI / 180;
-    float x0, x1;
-
-    x0 = ab.alpha_float * cos(theta_deg * pi180);
-    x1 = ab.beta_float * sin(theta_deg * pi180);
-    qd->d_float = x0 + x1;
-
-    x0 = -ab.alpha_float * sin(theta_deg * pi180);
-    x1 = ab.beta_float * cos(theta_deg * pi180);
-    qd->q_float = x0 + x1;
-}
+#define park_direct_2p(q_ptr, d_ptr, alpha, beta, theta_deg)        \
+do {                                                                \
+    const float __pi180 = M_PI / 180;                               \
+    float __x0, __x1;                                               \
+    __x0 = alpha * cos(theta_deg * __pi180);                        \
+    __x1 = beta * sin(theta_deg * __pi180);                         \
+    *d_ptr = __x0 + __x1;                                           \
+    __x0 = -alpha * sin(theta_deg * __pi180);                       \
+    __x1 = beta * cos(theta_deg * __pi180);                         \
+    *q_ptr = __x0 + __x1;                                           \
+} while(0)
 
 //
 // park inverse transform
@@ -59,20 +56,22 @@ void park_inverse_2p_q15(alpha_beta *ab, q_d qd, int theta_deg)
     x1 = q15_fixed_mul(qd.q, cos_theta);
     ab->beta = q15_fixed_add(x0, x1);
 }
-static inline
-void park_inverse_2p_float(alpha_beta *ab, q_d qd, int theta_deg)
-{
-    const float pi180 = M_PI / 180; 
-    float x0, x1;
+#define park_inverse_2p(alpha_ptr, beta_ptr, q, d, theta_deg)       \
+do {                                                                \
+    const float __pi180 = M_PI / 180;                               \
+    float __x0, __x1;                                               \
+    __x0 = d * cos(theta_deg * __pi180);                            \
+    __x1 = q * sin(theta_deg * __pi180);                            \
+    *alpha_ptr = __x0 - __x1;                                       \
+    __x0 = d * sin(theta_deg * __pi180);                            \
+    __x1 = q * cos(theta_deg * __pi180);                            \
+    *beta_ptr = __x0 + __x1;                                        \
+} while(0)
+// static inline
+// void park_inverse_2p_float(alpha_beta *ab, q_d qd, int theta_deg)
+// {
 
-    x0 = qd.d_float * cos(theta_deg * pi180);
-    x1 = qd.q_float * sin(theta_deg * pi180);
-    ab->alpha_float = x0 - x1;
-
-    x0 = qd.d_float * sin(theta_deg * pi180);
-    x1 = qd.q_float * cos(theta_deg * pi180);
-    ab->beta_float = x0 + x1;
-}
+// }
 
 #ifdef __cplusplus
 }
