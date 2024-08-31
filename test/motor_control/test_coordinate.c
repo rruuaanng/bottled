@@ -1,5 +1,4 @@
-#include <motor_control/clarke.h>
-#include <motor_control/park.h>
+#include <motor_control/coordinate.h>
 #include <stdio.h>
 
 
@@ -13,36 +12,36 @@ int main(int argc, char const *argv[])
 
 
     int wf = 15;
-    qfixed_fvar(x1, 25.15, wf);
-    qfixed_fvar(x2, 24.1851, wf);
+    qfmt_fvar(x1, 25.15, wf);
+    qfmt_fvar(x2, 24.1851, wf);
     phase_i_var(i, x1, x2, 0);
 
     puts("========================qfixed========================");
-    qfixed_to_float(&ia_f, i.ia, wf);
-    qfixed_to_float(&ib_f, i.ib, wf);
-    qfixed_to_float(&ic_f, i.ic, wf);
-    printf("A: %.4f \t B: %.4f \t C: %.4f\n", ia_f, ib_f, ic_f);
+    printf("A: %.4f \t B: %.4f \t C: %.4f\n", 
+        q15_fmt_to_float(x1),
+        q15_fmt_to_float(x2),
+        q15_fmt_to_float(0));
 
     clarke_direct_3p_q15(&ab, i);
-    qfixed_to_float(&alpha_f, ab.alpha, wf);
-    qfixed_to_float(&beta_f, ab.beta, wf);
-    printf("clarke -> alpha: %.4f \t beta: %.4f\n", alpha_f, beta_f);
+    printf("clarke -> alpha: %.4f \t beta: %.4f\n",
+        q15_fmt_to_float(ab.alpha),
+        q15_fmt_to_float(ab.beta));
 
     park_direct_2p_q15(&qd, ab, 30);
-    qfixed_to_float(&q_f, qd.q, wf);
-    qfixed_to_float(&d_f, qd.d, wf);
-    printf("park -> q: %.4f \t d: %.4f\n", q_f, d_f);
+    printf("park -> q: %.4f \t d: %.4f\n",
+        q15_fmt_to_float(qd.q),
+        q15_fmt_to_float(qd.d));
 
     park_inverse_2p_q15(&ab, qd, 30);
-    qfixed_to_float(&alpha_f, ab.alpha, wf);
-    qfixed_to_float(&beta_f, ab.beta, wf);
-    printf("park inverse -> alpha: %.4f \t beta: %.4f\n", alpha_f, beta_f);
+    printf("park inverse -> alpha: %.4f \t beta: %.4f\n",
+        q15_fmt_to_float(ab.alpha),
+        q15_fmt_to_float(ab.beta));
 
     clarke_inverse_2p_q15(&i, ab);
-    qfixed_to_float(&ia_f, i.ia, wf);
-    qfixed_to_float(&ib_f, i.ib, wf);
-    qfixed_to_float(&ic_f, i.ic, wf);
-    printf("clarke inverse -> A: %.4f \t B: %.4f \t C: %.4f \n", ia_f, ib_f, ic_f);
+    printf("clarke inverse -> A: %.4f \t B: %.4f \t C: %.4f \n",
+        q15_fmt_to_float(i.ia),
+        q15_fmt_to_float(i.ib),
+        q15_fmt_to_float(i.ic));
 
     puts("========================float========================");
     float alpha_float, beta_float;

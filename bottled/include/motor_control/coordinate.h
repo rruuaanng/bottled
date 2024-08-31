@@ -1,5 +1,5 @@
-#ifndef NONGFU_SPRING_MOTOR_CONTROL_PARK_H
-#define NONGFU_SPRING_MOTOR_CONTROL_PARK_H
+#ifndef NONGFU_SPRING_MOTOR_CONTROL_COORDINATE_H
+#define NONGFU_SPRING_MOTOR_CONTROL_COORDINATE_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -7,25 +7,29 @@ extern "C" {
 
 #include <motor_control/common.h>
 
-//
-// park transform
-//
-static inline
-void park_direct_2p_q15(q_d *qd, alpha_beta ab, int theta_deg)
-{
-    qfixed x0, x1;
-    qfixed sin_theta, cos_theta;
+void clarke_direct_3p_q15(alpha_beta *, phase_i);
+void clarke_inverse_2p_q15(phase_i *, alpha_beta);
+void park_direct_2p_q15(q_d *, alpha_beta, int);
+void park_inverse_2p_q15(alpha_beta *, q_d, int);
 
-    qfixed_math_sin_cos_q15(&sin_theta, &cos_theta, theta_deg);
+#define clarke_direct_3p(alpha_ptr, beta_ptr, ia, ib)       \
+do {                                                        \
+    float __x0, __x1;                                       \
+    const float __sqrt3 = 1.73205f;                         \
+    *alpha_ptr = ia;                                        \
+    __x0 = (__sqrt3 * ia) / 3;                              \
+    __x1 = (2 * __sqrt3 * ib) / 3;                          \
+    *beta_ptr = __x0 + __x1;                                \
+} while(0)
 
-    x0 = q15_fixed_mul(ab.alpha, cos_theta);
-    x1 = q15_fixed_mul(ab.beta, sin_theta);
-    qd->d = q15_fixed_add(x0, x1);
-    
-    x0 = q15_fixed_mul(-ab.alpha, sin_theta);
-    x1 = q15_fixed_mul(ab.beta, cos_theta);
-    qd->q = q15_fixed_add(x0, x1);
-}
+#define clarke_inverse_2p(ia_ptr, ib_ptr, ic_ptr, alpha, beta)       \
+do {                                                                 \
+    const float sqrt3 = 1.73205f;                                    \
+    *ia_ptr = alpha;                                                 \
+    *ib_ptr = (0 - alpha + sqrt3 * beta) / 2;                        \
+    *ic_ptr = (0 - alpha - sqrt3 * beta) / 2;                        \
+} while(0)
+
 #define park_direct_2p(q_ptr, d_ptr, alpha, beta, theta_deg)        \
 do {                                                                \
     const float __pi180 = M_PI / 180;                               \
@@ -38,24 +42,6 @@ do {                                                                \
     *q_ptr = __x0 + __x1;                                           \
 } while(0)
 
-//
-// park inverse transform
-//
-static inline
-void park_inverse_2p_q15(alpha_beta *ab, q_d qd, int theta_deg)
-{
-    qfixed x0, x1;
-    qfixed sin_theta, cos_theta;
-
-    qfixed_math_sin_cos_q15(&sin_theta, &cos_theta, theta_deg);
-    x0 = q15_fixed_mul(qd.d, cos_theta);
-    x1 = q15_fixed_mul(qd.q, sin_theta);
-    ab->alpha = q15_fixed_sub(x0, x1);
-    
-    x0 = q15_fixed_mul(qd.d, sin_theta);
-    x1 = q15_fixed_mul(qd.q, cos_theta);
-    ab->beta = q15_fixed_add(x0, x1);
-}
 #define park_inverse_2p(alpha_ptr, beta_ptr, q, d, theta_deg)       \
 do {                                                                \
     const float __pi180 = M_PI / 180;                               \
@@ -67,14 +53,9 @@ do {                                                                \
     __x1 = q * cos(theta_deg * __pi180);                            \
     *beta_ptr = __x0 + __x1;                                        \
 } while(0)
-// static inline
-// void park_inverse_2p_float(alpha_beta *ab, q_d qd, int theta_deg)
-// {
-
-// }
 
 #ifdef __cplusplus
 }
 #endif 
 
-#endif // NONGFU_SPRING_MOTOR_CONTROL_PARK_H
+#endif // NONGFU_SPRING_MOTOR_CONTROL_COORDINATE_H
