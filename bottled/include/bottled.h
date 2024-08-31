@@ -11,8 +11,7 @@
 //
 // import motor_control header file
 //
-#include <motor_control/clarke.h>
-#include <motor_control/park.h>
+#include <motor_control/coordinate.h>
 #include <motor_control/encoder.h>
 #include <motor_control/common.h>
 #include <motor_control/pid_control.h>
