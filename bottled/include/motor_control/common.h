@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #include <common/types.h>
-#include <common/qfixed.h>
+#include <common/qfmt.h>
 #include <math.h>
 
 //
