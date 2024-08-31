@@ -30,7 +30,7 @@ void pid_control_q15(
     
     *prev_err = err;
     *err_sum += err;
-    *out = q15_fixed_add(q15_fixed_add(p, i), d);
+    *out = q15_fmt_add(q15_fmt_add(p, i), d);
 }
 
 #ifdef __cplusplus

@@ -23,11 +23,11 @@ void kalman_filter_q15(
     x_mid = *x_last_q15;
     p_mid = *p_last_q15 + q15(q);
 
-    kg = q15_fixed_div(p_mid, q15_fixed_add(p_mid, q15(r)));
-    x_now = q15_fixed_mul(
-        q15_fixed_add(x_mid, kg),
-        q15_fixed_sub(q15(measured_val), x_mid));
-    p_now = q15_fixed_mul(q15_fixed_sub(q15(1), kg), p_mid);
+    kg = q15_fmt_div(p_mid, q15_fmt_add(p_mid, q15(r)));
+    x_now = q15_fmt_mul(
+        q15_fmt_add(x_mid, kg),
+        q15_fmt_sub(q15(measured_val), x_mid));
+    p_now = q15_fmt_mul(q15_fmt_sub(q15(1), kg), p_mid);
 
     *p_last_q15 = p_now;
     *x_last_q15 = x_now;
