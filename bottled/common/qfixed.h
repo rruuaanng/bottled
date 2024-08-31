@@ -489,6 +489,8 @@ void qfixed_div(
 
 error:
     *y = 0;
+#undef ____right
+#undef ____sub_tmp
 }
 #define q15_fixed_div(x1, x2) ({ \
     qfixed __qfixed_val; \
