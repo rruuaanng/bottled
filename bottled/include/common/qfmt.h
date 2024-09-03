@@ -57,6 +57,16 @@ extern "C" {
     0x7EBE,0x7EBB,0x7ED5,0x7F0A,0x7F0A,0x7F21,0x7F4B,0x7F4B, \
     0x7F80,0x7F80,0x7F86,0x7FAE,0x7FAE,0x7FB4,0x7FD2,0x7FCE, \
     0x7FD8,0x7FE9,0x7FE9,0x7FEF,0x7FF9,0x7FF9,0x7FFC,0x8000}
+#define DIV_NUM_TABLE   {                           \
+    0x7F, 0x7D, 0x7B, 0x79, 0x78, 0x76, 0x74, 0x73, \
+    0x71, 0x6F, 0x6E, 0x6D, 0x6B, 0x6A, 0x68, 0x67, \
+    0x66, 0x65, 0x63, 0x62, 0x61, 0x60, 0x5F, 0x5E, \
+    0x5D, 0x5C, 0x5B, 0x5A, 0x59, 0x58, 0x57, 0x56, \
+    0x55, 0x54, 0x53, 0x52, 0x52, 0x51, 0x50, 0x4F, \
+    0x4E, 0x4E, 0x4D, 0x4C, 0x4C, 0x4B, 0x4A, 0x49, \
+    0x49, 0x48, 0x48, 0x47, 0x46, 0x46, 0x45, 0x45, \
+    0x44, 0x43, 0x43, 0x42, 0x42, 0x41, 0x41, 0x40, \
+    0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}
 
 //
 // utils
@@ -72,7 +82,6 @@ extern "C" {
 // qfmt structure
 //
 #define Q_FIXED_SIZE                    0x20                //
-#define Q_FIXED_WF_31                   0x1F                //
 #define Q_FIXED_WF_30                   0x1E                //
 #define Q_FIXED_WF_29                   0x1D                //
 #define Q_FIXED_WF_28                   0x1C                //
@@ -108,7 +117,6 @@ typedef int64_t                         qfmt;
 // fast convert to qfmt
 //
 #define qxx(n_float, wf)                __to_qfmt(n_float, wf)
-#define q31(n_float)                    __to_qfmt(n_float, Q_FIXED_WF_31)
 #define q30(n_float)                    __to_qfmt(n_float, Q_FIXED_WF_30)
 #define q29(n_float)                    __to_qfmt(n_float, Q_FIXED_WF_29)
 #define q28(n_float)                    __to_qfmt(n_float, Q_FIXED_WF_28)
@@ -155,9 +163,6 @@ typedef int64_t                         qfmt;
 // float-point number convert to fixed-point number
 //
 extern qfmt float_to_qfmt(float, int);
-#define float_to_q31_fmt(n_float) \
-    float_to_qfmt(n_float, Q_FIXED_WF_31)
-
 #define float_to_q30_fmt(n_float) \
     float_to_qfmt(n_float, Q_FIXED_WF_30)
 
@@ -234,9 +239,6 @@ extern qfmt float_to_qfmt(float, int);
 // fixed-point number convert to float-point number
 //
 extern float qfmt_to_float(qfmt, int);
-#define q31_fmt_to_float(fixed) \
-    qfmt_to_float(fixed, Q_FIXED_WF_31)
-
 #define q30_fmt_to_float(fixed) \
     qfmt_to_float(fixed, Q_FIXED_WF_30)
 
@@ -313,9 +315,6 @@ extern float qfmt_to_float(qfmt, int);
 // fixed-point number addition
 //
 extern qfmt qfmt_add(qfmt, qfmt, int, int);
-#define q31_fmt_add(x1, x2) \
-    qfmt_add(x1, x2, Q_FIXED_WF_31, Q_FIXED_WF_31)
-
 #define q30_fmt_add(x1, x2) \
     qfmt_add(x1, x2, Q_FIXED_WF_30, Q_FIXED_WF_30)
 
@@ -392,9 +391,6 @@ extern qfmt qfmt_add(qfmt, qfmt, int, int);
 // fixed-point number subtraction
 //  
 extern qfmt qfmt_sub(qfmt, qfmt, int, int);
-#define q31_fmt_sub(x1, x2) \
-    qfmt_sub(x1, x2, Q_FIXED_WF_31, Q_FIXED_WF_31)
-
 #define q30_fmt_sub(x1, x2) \
     qfmt_sub(x1, x2, Q_FIXED_WF_30, Q_FIXED_WF_30)
 
@@ -471,9 +467,6 @@ extern qfmt qfmt_sub(qfmt, qfmt, int, int);
 // fixed-point number multiplication
 //
 extern qfmt qfmt_mul(qfmt, qfmt, int);
-#define q31_fmt_mul(x1, x2) \
-    qfmt_mul(x1, x2, Q_FIXED_WF_31)
-
 #define q30_fmt_mul(x1, x2) \
     qfmt_mul(x1, x2, Q_FIXED_WF_30)
 
@@ -550,9 +543,6 @@ extern qfmt qfmt_mul(qfmt, qfmt, int);
 // fixed-point number division
 //
 extern qfmt qfmt_div(qfmt, qfmt, int);
-#define q31_fmt_div(x1, x2) \
-    qfmt_div(x1, x2, Q_FIXED_WF_31)
-
 #define q30_fmt_div(x1, x2) \
     qfmt_div(x1, x2, Q_FIXED_WF_30)
 
