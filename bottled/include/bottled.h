@@ -5,7 +5,7 @@
 // import common module
 //
 #include <common/bit.h>
-#include <common/qfixed.h>
+#include <common/qfmt.h>
 #include <common/types.h>
 
 //
