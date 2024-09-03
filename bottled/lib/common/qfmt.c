@@ -69,25 +69,15 @@ float qfmt_to_float(qfmt fixed, int wf)
 //  x2_wf    x2 bit width
 // return:
 //  y        qfmt object ptr
-qfmt qfmt_add(
-    qfmt x1, qfmt x2,
-    int x1_wf, int x2_wf)
+qfmt qfmt_add(qfmt x1, qfmt x2)
 {
-    int32_t n1, n2;
-    int wf_diff;
-
-    n1 = x1;
-    n2 = x2;
-
-    // align decimal places
-    wf_diff = diff(x1_wf, x2_wf);
-    if (x1_wf < x2_wf) {
-        n1 <<= wf_diff;
-    } else {
-        n2 <<= wf_diff;
-    }
-
-    return n1 + n2;
+    int tmp;
+    
+    tmp = x1 + x2;
+    if (tmp >= (INT32_MAX - 1))
+        tmp = INT32_MAX;
+    
+    return tmp;
 }
 
 //
@@ -100,25 +90,15 @@ qfmt qfmt_add(
 //  x2_wf    x2 bit width
 // return:
 //  y        qfmt object ptr
-qfmt qfmt_sub(
-    qfmt x1, qfmt x2,
-    int x1_wf, int x2_wf)
+qfmt qfmt_sub(qfmt x1, qfmt x2)
 {
-    int32_t n1, n2;
-    int wf_diff;
-
-    n1 = x1;
-    n2 = x2;
+    int tmp;
     
-    // align decimal places
-    wf_diff = diff(x1_wf, x2_wf);
-    if (x1_wf < x2_wf) {
-        n2 <<= wf_diff;
-    } else {
-        n1 <<= wf_diff;
-    }
-
-    return n1 - n2;
+    tmp = x1 - x2;
+    if (tmp <= (INT32_MIN + 1))
+        tmp = INT32_MIN;
+    
+    return tmp;
 }
 
 // fixed-point number multiplication
