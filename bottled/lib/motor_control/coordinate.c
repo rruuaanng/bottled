@@ -34,8 +34,8 @@ void clarke_inverse_2p_q15(phase_i *i, alpha_beta ab)
     const qfmt sqrt3 = Q15_FMT_SQRT3; // q15
 
     i->ia = ab.alpha;
-    i->ib = q15_fmt_add(0 - ab.alpha, q15_fmt_mul(sqrt3, ab.beta)) / 2;
-    i->ic = q15_fmt_sub(0 - ab.alpha, q15_fmt_mul(sqrt3, ab.beta)) / 2;
+    i->ib = qfmt_add(0 - ab.alpha, q15_fmt_mul(sqrt3, ab.beta)) / 2;
+    i->ic = qfmt_sub(0 - ab.alpha, q15_fmt_mul(sqrt3, ab.beta)) / 2;
 }
 
 //
@@ -50,11 +50,11 @@ void park_direct_2p_q15(q_d *qd, alpha_beta ab, int theta_deg)
 
     x0 = q15_fmt_mul(ab.alpha, cos_theta);
     x1 = q15_fmt_mul(ab.beta, sin_theta);
-    qd->d = q15_fmt_add(x0, x1);
+    qd->d = qfmt_add(x0, x1);
     
     x0 = q15_fmt_mul(-ab.alpha, sin_theta);
     x1 = q15_fmt_mul(ab.beta, cos_theta);
-    qd->q = q15_fmt_add(x0, x1);
+    qd->q = qfmt_add(x0, x1);
 }
 
 //
@@ -68,9 +68,9 @@ void park_inverse_2p_q15(alpha_beta *ab, q_d qd, int theta_deg)
     qfmt_math_sin_cos_q15(&sin_theta, &cos_theta, theta_deg);
     x0 = q15_fmt_mul(qd.d, cos_theta);
     x1 = q15_fmt_mul(qd.q, sin_theta);
-    ab->alpha = q15_fmt_sub(x0, x1);
+    ab->alpha = qfmt_sub(x0, x1);
     
     x0 = q15_fmt_mul(qd.d, sin_theta);
     x1 = q15_fmt_mul(qd.q, cos_theta);
-    ab->beta = q15_fmt_add(x0, x1);
+    ab->beta = qfmt_add(x0, x1);
 }
